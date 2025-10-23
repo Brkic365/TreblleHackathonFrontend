@@ -1,0 +1,50 @@
+@import '../variables';
+
+.button {
+    color: $text-primary;
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    box-shadow: inset 0px -2px 4px $shadow-primary;
+    
+    &:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 
+        inset 0px -2px 4px $shadow-primary,
+        0px 4px 12px $shadow-primary;
+    }
+    
+    &:active {
+      transform: translateY(0);
+      filter: brightness(1);
+    }
+
+    .buttonText {
+        font-size: 0.875rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.red {
+    background: $primary;
+}
+
+@media (max-width: 480px) {
+    .ctaButton { 
+        width: 100%; max-width: 17.5rem; 
+    }
+}
+  
+@media (min-width: 768px) {
+    .ctaButton { 
+        padding: 0.75rem 1.5rem; 
+        .buttonText {
+            font-size: 0.875rem;
+        }
+    }
+}

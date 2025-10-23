@@ -1,0 +1,89 @@
+@import '../variables';
+
+.navbar {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 95%;
+    max-width: 80rem;
+  
+    .navbarContent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-radius: 5rem;
+      position: relative;
+  
+      background: rgba($bg-secondary, $opacity-light); 
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+
+      border: 1px solid $border-primary;
+      box-shadow: inset 0px 1px 1px rgba($text-primary, 0.5);
+    }
+  
+    .leftSection {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+  
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .brandText {
+        color: $text-primary;
+        font-size: 1.2rem;
+        font-family: "DM Sans", sans-serif;
+  
+        font-weight: 100;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+    }
+  
+    .rightSection {
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar {
+      .navbarContent {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+        .leftSection { justify-content: center; }
+        .rightSection {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .navbar {
+      top: 1.25rem;
+      width: 90%;
+      .navbarContent {
+        padding: 1rem 1.5rem;
+        .leftSection { .brandText { font-size: 1.3rem; } }
+      }
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .navbar {
+      .navbarContent {
+        padding: 1rem 2rem;
+      }
+    }
+  }

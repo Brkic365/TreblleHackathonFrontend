@@ -1,0 +1,45 @@
+// Primary Colors
+$color-pink: #E1207A;
+$color-purple: #9103EB;
+$color-dark-blue: #050215;
+
+// Secondary Colors  
+$color-blue-gray-dark: #1A1726;
+$color-blue-gray: #333741;
+$color-gray: #94969C;
+
+// Semantic Color Mappings
+$primary: $color-pink;
+$secondary: $color-purple;
+$accent: $color-purple;
+
+// Background Colors
+$bg-primary: $color-dark-blue;
+$bg-secondary: $color-blue-gray-dark;
+$bg-tertiary: $color-blue-gray;
+
+// Text Colors
+$text-primary: #ffffff;
+$text-secondary: $color-gray;
+$text-muted: rgba(255, 255, 255, 0.7);
+
+// Border Colors
+$border-primary: rgba(255, 255, 255, 0.2);
+$border-secondary: rgba(255, 255, 255, 0.1);
+
+// Shadow Colors
+$shadow-primary: rgba(0, 0, 0, 0.2);
+$shadow-secondary: rgba(0, 0, 0, 0.1);
+
+// Gradient Colors
+$gradient-bg: $color-dark-blue;
+$gradient-purple-primary: #8B5CF6;
+$gradient-purple-secondary: #A855F7;
+$gradient-magenta-primary: #EC4899;
+$gradient-magenta-secondary: #F472B6;
+$gradient-pink-accent: #F97316;
+
+// Opacity Variations
+$opacity-light: 0.4;
+$opacity-medium: 0.6;
+$opacity-heavy: 0.8;
