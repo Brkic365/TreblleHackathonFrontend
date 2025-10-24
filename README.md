@@ -2,8 +2,6 @@
 
 A modern, real-time API monitoring and analytics platform built with Next.js 15, TypeScript, and NextAuth.js. RunTime provides comprehensive insights into your API performance, security, and usage patterns.
 
-![RunTime Logo](https://via.placeholder.com/400x100/1a1a1a/ffffff?text=RunTime)
-
 ## 🚀 Features
 
 ### 📊 **Real-Time Monitoring**
