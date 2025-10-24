@@ -1,0 +1,30 @@
+@import '../variables';
+
+.crumb {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem 0.4rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    gap: 0.5rem;
+
+    .crumbNew {
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.7rem;
+        font-weight: 400;
+        font-family: 'DM Sans', sans-serif;
+        color: $text-primary;
+        background: $primary;
+    }
+    
+    .crumbText {
+        font-size: 0.9rem;
+        font-weight: 200;
+        font-family: 'DM Sans', sans-serif;
+        opacity: 0.9;
+        color: $text-primary;
+    }
+}

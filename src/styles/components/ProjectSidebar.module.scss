@@ -1,0 +1,303 @@
+@import '../_variables.scss';
+
+.projectSidebar {
+  background: rgba($bg-secondary, 0.6);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid $border-secondary;
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Take full height from grid
+  overflow: hidden; // Prevent sidebar scrolling
+
+  .projectHeader {
+    background: rgba($bg-secondary, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid $border-secondary;
+    padding: 1.5rem;
+
+    .projectSwitcher {
+      position: relative;
+      margin-bottom: 1rem;
+
+      .switcherButton {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        background: none;
+        border: none;
+        color: $text-primary;
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease;
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+
+        &:hover {
+          background: rgba($text-primary, 0.1);
+        }
+
+        .projectName {
+          font-size: 1rem;
+          font-weight: 600;
+          color: $text-primary;
+          font-family: var(--font-michroma);
+          text-align: left;
+        }
+      }
+
+      .projectDropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba($bg-secondary, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid $border-secondary;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0;
+        z-index: 1000;
+        margin-top: 0.5rem;
+        max-height: 300px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+
+        .searchContainer {
+          padding: 0.5rem;
+          border-bottom: 1px solid $border-secondary;
+          margin-bottom: 0.5rem;
+
+          .searchInputWrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .searchIcon {
+              position: absolute;
+              left: 0.75rem;
+              color: $text-muted;
+              z-index: 1;
+              pointer-events: none;
+            }
+
+            .searchInput {
+              width: 100%;
+              padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+              background: rgba($bg-primary, 0.3);
+              border: 1px solid $border-primary;
+              border-radius: 0.375rem;
+              color: $text-primary;
+              font-size: 0.875rem;
+              transition: all 0.2s ease;
+
+              &:focus {
+                outline: none;
+                border-color: $primary;
+                box-shadow: 0 0 0 3px rgba($primary, 0.1);
+              }
+
+              &::placeholder {
+                color: $text-muted;
+              }
+            }
+          }
+        }
+
+        .projectList {
+          max-height: 200px;
+          overflow-y: auto;
+          
+          // Custom scrollbar
+          &::-webkit-scrollbar {
+            width: 6px;
+          }
+          
+          &::-webkit-scrollbar-track {
+            background: rgba($bg-tertiary, 0.2);
+          }
+          
+          &::-webkit-scrollbar-thumb {
+            background: rgba($primary, 0.6);
+            border-radius: 3px;
+            
+            &:hover {
+              background: rgba($primary, 0.8);
+            }
+          }
+
+          .noResults {
+            padding: 1rem;
+            text-align: center;
+            color: $text-muted;
+            font-size: 0.875rem;
+          }
+        }
+
+        .projectOption {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          background: none;
+          border: none;
+          color: $text-muted;
+          cursor: pointer;
+          padding: 0.75rem 1rem;
+          transition: all 0.2s ease;
+          text-align: left;
+          position: relative;
+          z-index: 1;
+
+          &:hover {
+            background: rgba($text-primary, 0.1);
+            color: $text-primary;
+          }
+
+          &.active {
+            background: rgba($primary, 0.2);
+            color: $primary;
+          }
+
+          &:focus {
+            outline: none;
+            background: rgba($primary, 0.1);
+            color: $primary;
+          }
+
+          .projectOptionInfo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            width: 100%;
+
+            .projectOptionName {
+              font-size: 0.875rem;
+              font-weight: 500;
+            }
+
+            .projectOptionMeta {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+
+              .statusDot {
+                width: 0.5rem;
+                height: 0.5rem;
+                border-radius: 50%;
+              }
+
+              .projectOptionStatus {
+                font-size: 0.75rem;
+                color: rgba(255, 255, 255, 0.6);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .projectInfo {
+      .projectDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .projectApiRoute {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          .apiRouteLabel {
+            font-size: 0.75rem;
+            color: $text-muted;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            font-weight: 600;
+          }
+
+          .apiRouteValue {
+            font-size: 0.875rem;
+            color: $text-primary;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            word-break: break-all;
+          }
+        }
+
+        .projectStatus {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .statusIndicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+          }
+
+          .statusText {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: $text-muted;
+          }
+        }
+      }
+    }
+  }
+
+  .projectSidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.5rem 1rem;
+    flex: 1;
+
+    .projectTabLink {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: $text-muted;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      font-size: 0.875rem;
+
+      &:hover {
+        background: rgba($text-primary, 0.1);
+        color: $text-primary;
+      }
+
+      &.active {
+        background: $primary;
+        color: $text-primary;
+
+        &:hover {
+          background: $primary;
+          color: $text-primary;
+        }
+      }
+
+      .projectTabIcon {
+        font-size: 1rem;
+        width: 1.25rem;
+        text-align: center;
+      }
+
+      .projectTabLabel {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .switcherOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: transparent;
+  }
+}

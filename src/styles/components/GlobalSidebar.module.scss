@@ -1,0 +1,74 @@
+@import '../_variables.scss';
+
+.globalSidebar {
+  background: rgba($bg-secondary, 0.8);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid $border-secondary;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  height: 100%; // Take full height
+  overflow: hidden; // Prevent sidebar scrolling
+
+  &.collapsed {
+    .sidebarLabel {
+      display: none;
+    }
+    
+    .sidebarItem {
+      justify-content: center;
+      padding: 0.75rem;
+    }
+  }
+
+  .sidebarContent {
+    padding: 1.5rem 0;
+    flex: 1;
+    overflow: hidden; // Remove scrolling from sidebar content
+
+    .sidebarNav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0 1rem;
+
+      .sidebarItem {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: $text-muted;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        font-size: 0.875rem;
+
+        &:hover {
+          background: rgba($text-primary, 0.1);
+          color: $text-primary;
+        }
+
+        &.active {
+          background: $primary;
+          color: $text-primary;
+
+          &:hover {
+            background: $primary;
+            color: $text-primary;
+          }
+        }
+
+        .sidebarIcon {
+          font-size: 1rem;
+          width: 1.25rem;
+          text-align: center;
+        }
+
+        .sidebarLabel {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

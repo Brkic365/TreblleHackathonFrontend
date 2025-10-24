@@ -1,0 +1,161 @@
+@import '../variables';
+
+.analyticsContainer {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.analyticsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.analyticsTitle {
+  flex: 1;
+}
+
+.analyticsTitle h1 {
+  font-family: "Michroma", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: $text-primary;
+  margin: 0 0 0.5rem 0;
+}
+
+.analyticsTitle p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: $text-muted;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// Removed analyticsActions and refreshButton styles
+
+.analyticsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.analyticsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.analyticsWidget {
+  min-height: 400px;
+}
+
+.analyticsWidgetFull {
+  grid-column: 1 / -1;
+  min-height: 400px;
+}
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 1rem;
+  text-align: center;
+  color: $text-muted;
+}
+
+.errorState svg {
+  color: #DC2626;
+}
+
+.errorState h3 {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0;
+}
+
+.errorState p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  margin: 0;
+  max-width: 400px;
+}
+
+.retryButton {
+  padding: 0.75rem 1.5rem;
+  background: rgba($primary, 0.1);
+  border: 1px solid $primary;
+  border-radius: 0.5rem;
+  color: $primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($primary, 0.2);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 1024px) {
+  .analyticsContainer {
+    padding: 1.5rem;
+  }
+
+  .analyticsRow {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .analyticsWidgetFull {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .analyticsContainer {
+    padding: 1rem;
+  }
+
+  .analyticsHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .analyticsTitle h1 {
+    font-size: 1.75rem;
+  }
+
+  .analyticsTitle p {
+    font-size: 0.875rem;
+  }
+
+  // Removed analyticsActions mobile styles
+
+  .analyticsGrid {
+    gap: 1.5rem;
+  }
+
+  .analyticsRow {
+    gap: 1rem;
+  }
+
+  .analyticsWidget,
+  .analyticsWidgetFull {
+    min-height: 300px;
+  }
+}

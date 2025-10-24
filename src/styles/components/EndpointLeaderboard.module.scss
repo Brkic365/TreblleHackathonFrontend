@@ -1,0 +1,247 @@
+@import '../variables';
+
+.leaderboardContainer {
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.leaderboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.leaderboardTitle {
+  font-family: "Michroma", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: $text-primary;
+  margin: 0;
+}
+
+.leaderboardCount {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  color: $text-muted;
+  background: rgba($bg-primary, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid $border-primary;
+}
+
+.leaderboardContent {
+  height: 300px;
+  overflow: hidden;
+}
+
+.leaderboardTable {
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 100%;
+}
+
+.leaderboardTableHeader {
+  display: grid;
+  grid-template-columns: 2fr 0.8fr 1fr 1fr 1fr;
+  background: rgba($bg-primary, 0.3);
+  border-bottom: 1px solid $border-primary;
+}
+
+.leaderboardTableHeaderCell {
+  padding: 0.75rem 1rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.leaderboardTableBody {
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+
+.leaderboardTableRow {
+  display: grid;
+  grid-template-columns: 2fr 0.8fr 1fr 1fr 1fr;
+  border-bottom: 1px solid $border-primary;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba($text-primary, 0.05);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.leaderboardTableCell {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+.endpointInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.endpointRank {
+  font-family: "Michroma", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $primary;
+  background: rgba($primary, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.endpointPath {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.8rem;
+  color: $text-primary;
+  background: rgba($bg-tertiary, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  word-break: break-all;
+  flex: 1;
+}
+
+.methodBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  min-width: 3rem;
+  text-align: center;
+}
+
+.latencyValue {
+  color: $text-primary;
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.requestCount {
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.errorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.errorRate {
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.lastError {
+  font-size: 0.75rem;
+  color: $text-muted;
+  opacity: 0.8;
+}
+
+.loadingState,
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 1rem;
+  color: $text-muted;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba($primary, 0.3);
+  border-top: 3px solid $primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Custom scrollbar for table
+.leaderboardTableBody {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba($bg-tertiary, 0.2);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.6);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba($primary, 0.8);
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .leaderboardContainer {
+    padding: 1rem;
+  }
+
+  .leaderboardTitle {
+    font-size: 1.125rem;
+  }
+
+  .leaderboardTableHeader,
+  .leaderboardTableRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .leaderboardTableHeaderCell {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .leaderboardTableCell {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .endpointInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .endpointPath {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,246 @@
+@import '../variables';
+
+.geoContainer {
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  height: 100%;
+}
+
+.geoHeader {
+  margin-bottom: 1.5rem;
+}
+
+.geoTitle {
+  font-family: "Michroma", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: $text-primary;
+  margin: 0 0 0.5rem 0;
+}
+
+.geoSubtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  color: $text-muted;
+  margin: 0;
+}
+
+.geoContent {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  gap: 1rem;
+  place-content: space-between;
+}
+
+.geoTable {
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.geoTableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  background: rgba($bg-primary, 0.3);
+  border-bottom: 1px solid $border-primary;
+}
+
+.geoTableHeaderCell {
+  padding: 0.75rem 1rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.geoTableBody {
+    max-height: 500px;
+  overflow-y: auto;
+}
+
+.geoTableRow {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  border-bottom: 1px solid $border-primary;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba($text-primary, 0.05);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.geoTableCell {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+.countryInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.countryFlag {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.countryName {
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.latencyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.latencyValue {
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.latencyLabel {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.requestCount {
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.errorRate {
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.loadingState,
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 1rem;
+  color: $text-muted;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba($primary, 0.3);
+  border-top: 3px solid $primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.geoLegend {
+  background: rgba($bg-primary, 0.2);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.geoLegendTitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 0.75rem;
+}
+
+.geoLegendItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.geoLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.geoLegendColor {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+// Custom scrollbar for table
+.geoTableBody {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba($bg-tertiary, 0.2);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.6);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba($primary, 0.8);
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .geoContainer {
+    padding: 1rem;
+  }
+
+  .geoTitle {
+    font-size: 1.125rem;
+  }
+
+  .geoTableHeader,
+  .geoTableRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .geoTableHeaderCell {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .geoTableCell {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .geoLegendItems {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

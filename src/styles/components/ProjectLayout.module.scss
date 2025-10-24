@@ -1,0 +1,266 @@
+// src/styles/components/ProjectLayout.module.scss
+
+@import '../_variables.scss';
+
+.projectLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: transparent;
+  width: 100%;
+}
+
+.projectHeader {
+  background: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
+}
+
+.headerContent {
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+
+.projectInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.projectSwitcher {
+  position: relative;
+}
+
+.switcherButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+  font-size: 1.125rem;
+  font-weight: 600;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.projectName {
+  font-family: var(--font-michroma);
+  letter-spacing: 0.025em;
+}
+
+.projectDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  min-width: 20rem;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.projectOption {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 1rem;
+  transition: background-color 0.2s ease;
+  text-align: left;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &.active {
+    background: #3b82f6;
+    color: white;
+
+    &:hover {
+      background: #3b82f6;
+    }
+  }
+}
+
+.projectOptionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.projectOptionName {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.projectOptionMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.projectOptionStatus {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.projectStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusIndicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.statusText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.projectSidebar {
+  width: 12rem;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  position: fixed;
+  top: 4rem;
+  left: 4rem; /* Positioned after the collapsed global sidebar */
+  height: calc(100vh - 4rem);
+  z-index: 40;
+
+  @media (min-width: 768px) {
+    position: static;
+    height: auto;
+  }
+}
+
+.projectSidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 1rem;
+}
+
+.projectTabLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.875rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  &.active {
+    background: #3b82f6;
+    color: white;
+
+    &:hover {
+      background: #3b82f6;
+      color: white;
+    }
+  }
+}
+
+.projectTabIcon {
+  font-size: 1rem;
+  width: 1.25rem;
+  text-align: center;
+}
+
+.projectTabLabel {
+  font-size: 0.875rem;
+}
+
+.projectMainContent {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  margin-left: 12rem; /* Account for the secondary sidebar */
+
+  @media (max-width: 767px) {
+    margin-left: 0;
+  }
+}
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 1rem;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  button {
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: var(--accent-hover);
+    }
+  }
+}
+
+.switcherOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}

@@ -1,0 +1,135 @@
+@import '../variables';
+
+.endpoint {
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba($bg-secondary, 0.8);
+    border-color: $primary;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($primary, 0.15);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.endpointHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.methodPath {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.method {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  flex-shrink: 0;
+}
+
+.path {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  color: $text-primary;
+  word-break: break-all;
+  flex: 1;
+  min-width: 0;
+}
+
+.status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background: rgba($bg-tertiary, 0.3);
+  flex-shrink: 0;
+}
+
+.endpointMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metricLabel {
+  font-size: 0.75rem;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+}
+
+.metricValue {
+  font-size: 0.875rem;
+  color: $text-primary;
+  font-weight: 500;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .endpoint {
+    padding: 1rem;
+  }
+
+  .endpointHeader {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .methodPath {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .endpointMetrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.chartSection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-secondary;
+}
+
+.chartContainer {
+  height: 80px;
+  background: rgba($bg-tertiary, 0.2);
+  border: 1px solid $border-secondary;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+}

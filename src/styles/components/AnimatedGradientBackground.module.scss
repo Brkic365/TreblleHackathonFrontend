@@ -1,15 +1,9 @@
 // src/components/AnimatedGradientBackground.module.scss
 @import '../variables';
 
-// 1. Enhanced Color Palette for vibrant, glowing effect
-$color-bg: $gradient-bg;      // Very dark background
-$color-purple-primary: $gradient-purple-primary;  // Vibrant purple for main masses
-$color-purple-secondary: $gradient-purple-secondary; // Lighter purple for blending
-$color-magenta-primary: $gradient-magenta-primary; // Bright magenta/fuchsia glow
-$color-magenta-secondary: $gradient-magenta-secondary; // Softer magenta for depth
-$color-pink-accent: $gradient-pink-accent; // Orange-pink accent for warmth
+// Multiple distinct blob shapes using primary colors
 
-// 2. The Main Background Container
+// Main Background Container
 .gradientBg {
   width: 100vw;
   height: 100vh;
@@ -17,190 +11,225 @@ $color-pink-accent: $gradient-pink-accent; // Orange-pink accent for warmth
   top: 0;
   left: 0;
   overflow: hidden;
-  background: $color-bg;
-  z-index: -1; // Keep it behind all other content
+  background: $gradient-bg;
+  z-index: -1;
 
-  // 3. The Blur Container
+  // Blur Container for soft, ethereal look
   .gradientsContainer {
     width: 100%;
     height: 100%;
-    // Enhanced blur for super-soft, ethereal look
-    filter: blur(150px) saturate(1.2);
+    filter: blur(80px) saturate(1.3) brightness(1.2);
     position: relative;
+
+    div {
+      position: absolute;
+      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; // Organic blob shape
+      opacity: 0.8;
+      mix-blend-mode: screen; // Creates glowing effect
+      filter: blur(1px); // Slight blur for soft edges
+    }
   }
 
-  // 4. Base styles for the amorphous shapes
-  [class*="glow"], [class*="mass"] {
-    position: absolute;
-    border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%; // Organic, amorphous shapes
-    opacity: 0.8;
-    mix-blend-mode: screen; // Creates glowing effect
-  }
-
-  // 5. Large Purple Mass (mid-left and central upper-left)
-  .purpleMass {
-    background: radial-gradient(circle at 30% 30%, $color-purple-primary, $color-purple-secondary);
-    width: 80vw;
-    height: 80vh;
-    left: -30vw;
-    top: -20vh;
-    animation: float-purple 20s ease-in-out infinite;
-    transform-origin: center;
-  }
-
-  // 6. Prominent Magenta Glow (mid-right extending to center)
-  .magentaGlow {
-    background: radial-gradient(circle at 40% 60%, $color-magenta-primary, $color-magenta-secondary);
-    width: 90vw;
-    height: 70vh;
-    right: -25vw;
-    top: 10vh;
-    animation: pulse-magenta 15s ease-in-out infinite;
-    transform-origin: center;
-  }
-
-  // 7. Secondary Purple Mass (overlapping for depth)
-  .purpleSecondary {
-    background: radial-gradient(circle at 60% 40%, $color-purple-secondary, transparent);
+  // Main Pink Blob (scattered upper area)
+  .pinkBlob {
+    background: $color-pink;
     width: 60vw;
-    height: 60vh;
-    left: 10vw;
-    top: -10vh;
-    animation: drift-purple 25s ease-in-out infinite;
+    height: 50vh;
+    left: 15%;
+    top: 10%;
+    animation: breathe-pink 8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  // Main Purple Blob (scattered upper-right)
+  .purpleBlob {
+    background: $color-purple;
+    width: 40vw;
+    height: 35vh;
+    right: 20%;
+    top: 5%;
+    animation: breathe-purple 10s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  // Secondary Pink Blob (scattered center-left)
+  .pinkBlob2 {
+    background: $gradient-magenta-primary;
+    width: 70vw;
+    height: 50vh;
+    left: 5%;
+    top: 60%;
+    animation: drift-pink 12s ease-in-out infinite;
+    opacity: 0.7;
+  }
+
+  // Secondary Purple Blob (scattered center-right)
+  .purpleBlob2 {
+    background: $gradient-purple-secondary;
+    width: 28vw;
+    height: 22vh;
+    right: 10%;
+    top: 50%;
+    animation: drift-purple 14s ease-in-out infinite;
     opacity: 0.6;
   }
 
-  // 8. Accent Pink Glow (for warmth and depth)
-  .pinkAccent {
-    background: radial-gradient(circle at 50% 50%, $color-pink-accent, transparent);
-    width: 40vw;
-    height: 40vh;
-    right: 20vw;
-    bottom: 20vh;
-    animation: warm-pulse 18s ease-in-out infinite;
+  // Small Accent Blob (scattered lower-center)
+  .accentBlob1 {
+    background: $gradient-pink-accent;
+    width: 18vw;
+    height: 15vh;
+    left: 40%;
+    bottom: 20%;
+    animation: pulse-accent 9s ease-in-out infinite;
+    opacity: 0.5;
+  }
+
+  // Small Accent Blob (scattered lower-left)
+  .accentBlob2 {
+    background: $gradient-orange-glow;
+    width: 16vw;
+    height: 14vh;
+    left: 25%;
+    bottom: 10%;
+    animation: pulse-accent2 11s ease-in-out infinite;
     opacity: 0.4;
   }
 
-  // 9. Additional depth layer
-  .depthLayer {
-    background: radial-gradient(circle at 20% 80%, $color-magenta-secondary, transparent);
-    width: 70vw;
-    height: 50vh;
-    left: -20vw;
-    bottom: -20vh;
-    animation: depth-flow 30s ease-in-out infinite;
+  // Tiny Detail Blob (scattered upper-center)
+  .detailBlob {
+    background: $gradient-magenta-bright;
+    width: 12vw;
+    height: 10vh;
+    left: 60%;
+    top: 30%;
+    animation: detail-pulse 7s ease-in-out infinite;
     opacity: 0.3;
   }
 }
 
-
-
-
-// 6. Enhanced Fluid Animations for Dynamic, Pulsing Effect
-
-@keyframes float-purple {
+// Enhanced Breathing and Moving Animations
+@keyframes breathe-pink {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.8;
   }
   25% {
-    transform: translate(20px, -30px) scale(1.1) rotate(5deg);
-    opacity: 0.9;
+    transform: scale(1.15) rotate(3deg) translate(20px, -15px);
+    opacity: 1;
   }
   50% {
-    transform: translate(-15px, 20px) scale(0.95) rotate(-3deg);
+    transform: scale(0.9) rotate(-2deg) translate(-10px, 25px);
     opacity: 0.7;
   }
   75% {
-    transform: translate(30px, 10px) scale(1.05) rotate(8deg);
-    opacity: 0.85;
+    transform: scale(1.1) rotate(4deg) translate(15px, -20px);
+    opacity: 0.9;
   }
   100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.8;
   }
 }
 
-@keyframes pulse-magenta {
+@keyframes breathe-purple {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.8;
   }
-  20% {
-    transform: translate(-25px, 15px) scale(1.2) rotate(-5deg);
+  30% {
+    transform: scale(1.2) rotate(-4deg) translate(-25px, 20px);
     opacity: 1;
   }
-  40% {
-    transform: translate(15px, -20px) scale(0.9) rotate(3deg);
+  60% {
+    transform: scale(0.85) rotate(3deg) translate(30px, -25px);
     opacity: 0.6;
   }
-  60% {
-    transform: translate(-10px, 25px) scale(1.15) rotate(-2deg);
-    opacity: 0.95;
+  100% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.8;
   }
-  80% {
-    transform: translate(20px, -10px) scale(0.85) rotate(4deg);
+}
+
+@keyframes drift-pink {
+  0% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.7;
   }
+  40% {
+    transform: scale(1.25) rotate(8deg) translate(35px, -30px);
+    opacity: 0.9;
+  }
+  80% {
+    transform: scale(0.8) rotate(-6deg) translate(-20px, 40px);
+    opacity: 0.5;
+  }
   100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.8;
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.7;
   }
 }
 
 @keyframes drift-purple {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.6;
   }
-  33% {
-    transform: translate(25px, -15px) scale(1.1) rotate(6deg);
+  35% {
+    transform: scale(1.3) rotate(-10deg) translate(-40px, 35px);
     opacity: 0.8;
   }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9) rotate(-4deg);
+  70% {
+    transform: scale(0.9) rotate(7deg) translate(25px, -35px);
     opacity: 0.4;
   }
   100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.6;
   }
 }
 
-@keyframes warm-pulse {
+@keyframes pulse-accent {
   0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translate(-15px, 20px) scale(1.3) rotate(10deg);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.4;
-  }
-}
-
-@keyframes depth-flow {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.3;
-  }
-  25% {
-    transform: translate(30px, -25px) scale(1.2) rotate(-8deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.5;
   }
   50% {
-    transform: translate(-20px, 15px) scale(0.8) rotate(5deg);
-    opacity: 0.2;
-  }
-  75% {
-    transform: translate(15px, 30px) scale(1.1) rotate(-3deg);
-    opacity: 0.4;
+    transform: scale(1.4) rotate(12deg) translate(-20px, 30px);
+    opacity: 0.7;
   }
   100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-accent2 {
+  0% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.5) rotate(-15deg) translate(25px, -35px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.4;
+  }
+}
+
+@keyframes detail-pulse {
+  0% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.6) rotate(20deg) translate(15px, -25px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1) rotate(0deg) translate(0, 0);
     opacity: 0.3;
   }
 }

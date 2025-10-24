@@ -1,0 +1,645 @@
+@import '../variables';
+
+.filterBar {
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: visible;
+  z-index: 100;
+}
+
+.filterContainer {
+  display: flex;
+  align-items: end;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.filterLabel {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.datePickerContainer,
+.projectSelectorContainer {
+  position: relative;
+  z-index: 1000;
+}
+
+.datePickerButton,
+.projectSelectorButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba($bg-primary, 0.3);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($bg-primary, 0.5);
+    border-color: $primary;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+    text-align: left;
+  }
+}
+
+.datePickerDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  padding: 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  min-width: 600px;
+  overflow: visible;
+  
+  // Ensure proper spacing for the day picker
+  .dayPicker {
+    margin: 0;
+    padding: 1.5rem;
+  }
+}
+
+// Ark UI Date Picker Styles
+.datePickerRoot {
+  position: relative;
+}
+
+.datePickerDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  min-width: 600px;
+  overflow: visible;
+}
+
+.datePickerNavButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  border-radius: 0.25rem;
+  color: $text-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: $text-primary;
+    background: rgba($primary, 0.1);
+  }
+}
+
+.datePickerViewControl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.datePickerLabel {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.datePickerActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-primary;
+}
+
+.datePickerAction {
+  padding: 0.5rem 1rem;
+  background: rgba($bg-primary, 0.3);
+  border: 1px solid $border-primary;
+  border-radius: 0.375rem;
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($primary, 0.2);
+    border-color: $primary;
+  }
+}
+
+.projectSelectorDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  padding: 0.75rem 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  min-width: 250px;
+}
+
+.projectSelectorHeader {
+  padding: 0 1rem;
+}
+
+.projectSelectorAction {
+  width: 100%;
+  padding: 0.5rem 0;
+  background: none;
+  border: none;
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.projectSelectorDivider {
+  height: 1px;
+  background: $border-primary;
+  margin: 0.5rem 0;
+}
+
+.projectSelectorList {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.projectSelectorItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba($text-primary, 0.1);
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: $primary;
+  }
+
+  .projectSelectorItemText {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.875rem;
+    color: $text-primary;
+  }
+}
+
+// Removed filterActions and refreshButton styles
+
+.filterActions {
+  margin-left: auto;
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba($primary, 0.1);
+  border: 1px solid $primary;
+  border-radius: 0.5rem;
+  color: $primary;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba($primary, 0.2);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Ark UI Date Picker Styles
+.datePickerRoot {
+  position: relative;
+}
+
+.datePickerControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.datePickerInput {
+  display: none; // Hide the inputs, we'll use the trigger for display
+}
+
+.datePickerButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba($bg-primary, 0.5);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  
+  &:hover {
+    background: rgba($bg-primary, 0.7);
+    border-color: $primary;
+  }
+}
+
+.datePickerClearButton {
+  padding: 0.5rem;
+  background: rgba($primary, 0.1);
+  border: 1px solid rgba($primary, 0.3);
+  border-radius: 0.375rem;
+  color: $primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba($primary, 0.2);
+  }
+}
+
+.datePickerPositioner {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);  
+  margin-top: 0.5rem;
+  z-index: 1000;
+}
+
+.datePickerContent {
+  position: relative;
+  z-index: 1000;
+  width: 20rem;
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  min-width: 400px;
+}
+
+.datePickerViewControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.datePickerNavButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  border-radius: 0.25rem;
+  color: $text-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: $text-primary;
+    background: rgba($primary, 0.1);
+  }
+}
+
+.datePickerViewTrigger {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+}
+
+.datePickerRangeText {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.datePickerTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.datePickerTableHead {
+  .datePickerTableRow {
+    .datePickerTableHeader {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      padding: 0.5rem 0;
+      text-align: center;
+    }
+  }
+}
+
+.datePickerTableBody {
+  .datePickerTableRow {
+    .datePickerTableCell {
+      padding: 0;
+      text-align: center;
+      
+      .datePickerTableCellTrigger {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.25rem;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.875rem;
+        color: $text-primary;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+          background: rgba($primary, 0.2);
+          color: $text-primary;
+        }
+        
+        &[data-selected] {
+          background: $primary;
+          color: white;
+          font-weight: 600;
+        }
+        
+        &[data-range-start],
+        &[data-range-end] {
+          background: $primary;
+          color: white;
+          font-weight: 600;
+        }
+        
+        &[data-range-middle] {
+          background: rgba($primary, 0.3);
+          color: $text-primary;
+        }
+        
+        &[data-disabled] {
+          color: $text-muted;
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+// Simple Day Picker Styles
+.dayPicker {
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  
+  // Override react-day-picker default styles
+  .rdp {
+    margin: 0;
+  }
+  
+  .rdp-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0;
+    
+    .rdp-caption_label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $text-primary;
+    }
+  }
+  
+  .rdp-nav {
+    display: flex;
+    gap: 0.5rem;
+    
+    .rdp-nav_button {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.25rem;
+      color: $text-muted;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        color: $text-primary;
+        background: rgba($primary, 0.1);
+      }
+    }
+  }
+  
+  .rdp-table {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .rdp-head_cell {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+  
+  .rdp-day {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.875rem;
+    color: $text-primary;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      background: rgba($primary, 0.2);
+      color: $text-primary;
+    }
+    
+    &.rdp-day_selected {
+      background: $primary;
+      color: white;
+      font-weight: 600;
+    }
+    
+    &.rdp-day_range_start,
+    &.rdp-day_range_end {
+      background: $primary;
+      color: white;
+      font-weight: 600;
+    }
+    
+    &.rdp-day_range_middle {
+      background: rgba($primary, 0.3);
+      color: $text-primary;
+    }
+    
+    &.rdp-day_disabled {
+      color: $text-muted;
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+  
+  .rdp-months {
+    display: flex;
+    gap: 2rem;
+    
+    .rdp-month {
+      flex: 1;
+      min-width: 280px;
+    }
+  }
+}
+
+.filterOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .filterContainer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .filterGroup {
+    min-width: auto;
+  }
+
+  .datePickerDropdown {
+    min-width: auto;
+    left: -1rem;
+    right: -1rem;
+  }
+
+  // Removed filterActions and refreshButton mobile styles
+
+  .filterActions {
+    margin-left: 0;
+    align-self: center;
+  }
+}

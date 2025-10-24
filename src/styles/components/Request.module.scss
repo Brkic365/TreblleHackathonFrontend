@@ -1,0 +1,93 @@
+@import '../variables';
+
+.requestCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($bg-secondary, 0.8);
+    border-color: rgba($primary, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.requestMethod {
+  flex-shrink: 0;
+}
+
+.methodBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  min-width: 3rem;
+  text-align: center;
+}
+
+.requestInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.requestPath {
+  margin-bottom: 0.5rem;
+  
+  code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    background: rgba($bg-tertiary, 0.3);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    color: $text-primary;
+    word-break: break-all;
+  }
+}
+
+.requestMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+}
+
+.statusCode {
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.responseTime {
+  color: $text-secondary;
+  font-weight: 500;
+}
+
+.timestamp {
+  color: $text-muted;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .requestCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .requestMeta {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}

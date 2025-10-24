@@ -1,0 +1,236 @@
+@import '../variables';
+
+// Mobile-first base styles
+.footer {
+  background: rgba($bg-secondary, 0.1);
+  border-top: 1px solid $border-primary;
+  padding: 3rem 0 2rem 0; // Remove horizontal padding for full width
+  width: 100vw; // Full viewport width
+  margin-left: calc(-50vw + 50%); // Center the full-width element
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem; // Add padding back to container
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.brand {
+  text-align: center;
+}
+
+.brandName {
+  color: $text-primary;
+  font-family: "Michroma", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem 0;
+}
+
+.brandDescription {
+  color: $text-secondary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.linkGroup {
+  text-align: center;
+}
+
+.linkTitle {
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.link {
+  display: block;
+  color: $text-secondary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba($border-primary, 0.3);
+}
+
+.copyright {
+  color: $text-secondary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+// Mobile (480px and up)
+@media (min-width: 480px) {
+  .footer {
+    padding: 3.5rem 0 2.5rem 0;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .brandName {
+    font-size: 1.5rem;
+  }
+
+  .brandDescription {
+    font-size: 1rem;
+  }
+
+  .linkTitle {
+    font-size: 1rem;
+  }
+
+  .link {
+    font-size: 0.9rem;
+  }
+
+  .copyright {
+    font-size: 0.85rem;
+  }
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .footer {
+    padding: 4rem 0 3rem 0;
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .brand {
+    text-align: left;
+    flex: 1;
+    max-width: 300px;
+  }
+
+  .links {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    flex: 2;
+  }
+
+  .linkGroup {
+    text-align: left;
+  }
+
+  .brandName {
+    font-size: 1.75rem;
+  }
+
+  .brandDescription {
+    font-size: 1.1rem;
+  }
+
+  .linkTitle {
+    font-size: 1.1rem;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+
+  .copyright {
+    font-size: 0.9rem;
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .footer {
+    padding: 5rem 0 4rem 0;
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .brandName {
+    font-size: 2rem;
+  }
+
+  .brandDescription {
+    font-size: 1.2rem;
+  }
+
+  .linkTitle {
+    font-size: 1.2rem;
+  }
+
+  .link {
+    font-size: 1.1rem;
+  }
+
+  .copyright {
+    font-size: 1rem;
+  }
+}
+
+// Large Desktop (1200px and up)
+@media (min-width: 1200px) {
+  .footer {
+    padding: 6rem 0 5rem 0;
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .brandName {
+    font-size: 2.25rem;
+  }
+
+  .brandDescription {
+    font-size: 1.3rem;
+  }
+
+  .linkTitle {
+    font-size: 1.3rem;
+  }
+
+  .link {
+    font-size: 1.2rem;
+  }
+
+  .copyright {
+    font-size: 1.1rem;
+  }
+}

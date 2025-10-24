@@ -1,0 +1,303 @@
+@import '../variables';
+
+// Mobile-first base styles
+.endpointDetail {
+  min-height: 100vh;
+  padding: 6rem 1rem 1rem 1rem; // Added top padding for navbar overlap
+  background: linear-gradient(135deg, $bg-primary 0%, $secondary 100%);
+}
+
+.endpointDetailContent {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.endpointHeader {
+  margin-bottom: 2rem;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h1 {
+    color: $text-primary;
+    font-family: "Michroma", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.tabNavigation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $border-primary;
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &.active {
+    color: $primary;
+    border-bottom-color: $primary;
+  }
+}
+
+.tabContent {
+  min-height: 500px;
+}
+
+.requestsTab,
+.problemsTab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settingsTab {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settingsSection {
+  background: rgba($bg-secondary, $opacity-light);
+  border-radius: 1rem;
+  border: 1px solid $border-primary;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.5rem;
+
+  h3 {
+    color: $text-primary;
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: $text-primary;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+}
+
+.settingsInput {
+  padding: 0.75rem 1rem;
+  background: rgba($bg-tertiary, 0.8);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  color: $text-primary;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    background: rgba($bg-tertiary, 1);
+  }
+
+  &[readonly] {
+    background: rgba($bg-tertiary, 0.5);
+    color: $text-secondary;
+  }
+}
+
+.proxyUrlDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba($bg-tertiary, 0.8);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+
+  code {
+    flex: 1;
+    color: $primary;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.875rem;
+    background: none;
+    word-break: break-all;
+  }
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba($bg-primary, 0.5);
+    color: $text-primary;
+  }
+}
+
+.dangerZone {
+  background: rgba($bg-secondary, $opacity-light);
+  border-radius: 1rem;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.5rem;
+
+  h3 {
+    color: #EF4444;
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    color: $text-secondary;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.875rem;
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+// Mobile (480px and up)
+@media (min-width: 480px) {
+  .endpointDetail {
+    padding: 6.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .headerLeft h1 {
+    font-size: 1.75rem;
+  }
+
+  .tabButton {
+    font-size: 0.9rem;
+    padding: 0.875rem 1.25rem;
+  }
+
+  .settingsSection {
+    padding: 2rem;
+  }
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .endpointDetail {
+    padding: 7rem 2rem 2rem 2rem;
+  }
+
+  .headerLeft {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .tabButton {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .infoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .settingsSection {
+    padding: 2.5rem;
+  }
+
+  .dangerZone {
+    padding: 2rem;
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .endpointDetail {
+    padding: 7.5rem 2.5rem 2.5rem 2.5rem;
+  }
+
+  .headerLeft h1 {
+    font-size: 2.25rem;
+  }
+
+  .tabButton {
+    font-size: 1.125rem;
+    padding: 1.25rem 2rem;
+  }
+
+  .settingsSection {
+    padding: 3rem;
+  }
+
+  .dangerZone {
+    padding: 2.5rem;
+  }
+}
+
+// Large Desktop (1200px and up)
+@media (min-width: 1200px) {
+  .endpointDetail {
+    padding: 8rem 3rem 3rem 3rem;
+  }
+
+  .headerLeft h1 {
+    font-size: 2.5rem;
+  }
+}

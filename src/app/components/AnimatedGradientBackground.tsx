@@ -5,11 +5,13 @@ const AnimatedGradientBackground = () => {
   return (
     <div className={styles.gradientBg}>
       <div className={styles.gradientsContainer}>
-        <div className={styles.purpleMass}></div>
-        <div className={styles.magentaGlow}></div>
-        <div className={styles.purpleSecondary}></div>
-        <div className={styles.pinkAccent}></div>
-        <div className={styles.depthLayer}></div>
+        <div className={styles.pinkBlob}></div>
+        <div className={styles.purpleBlob}></div>
+        <div className={styles.pinkBlob2}></div>
+        <div className={styles.purpleBlob2}></div>
+        <div className={styles.accentBlob1}></div>
+        <div className={styles.accentBlob2}></div>
+        <div className={styles.detailBlob}></div>
       </div>
     </div>
   );

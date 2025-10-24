@@ -3,10 +3,12 @@ $color-pink: #E1207A;
 $color-purple: #9103EB;
 $color-dark-blue: #050215;
 
+$accent-primary: #9103EB;
+
 // Secondary Colors  
 $color-blue-gray-dark: #1A1726;
 $color-blue-gray: #333741;
-$color-gray: #94969C;
+$color-gray: #ffffffd3;
 
 // Semantic Color Mappings
 $primary: $color-pink;
@@ -21,6 +23,7 @@ $bg-tertiary: $color-blue-gray;
 // Text Colors
 $text-primary: #ffffff;
 $text-secondary: $color-gray;
+$text-tertiary: #ffffff;
 $text-muted: rgba(255, 255, 255, 0.7);
 
 // Border Colors
@@ -31,13 +34,22 @@ $border-secondary: rgba(255, 255, 255, 0.1);
 $shadow-primary: rgba(0, 0, 0, 0.2);
 $shadow-secondary: rgba(0, 0, 0, 0.1);
 
-// Gradient Colors
-$gradient-bg: $color-dark-blue;
-$gradient-purple-primary: #8B5CF6;
-$gradient-purple-secondary: #A855F7;
-$gradient-magenta-primary: #EC4899;
-$gradient-magenta-secondary: #F472B6;
-$gradient-pink-accent: #F97316;
+// Info Colors
+$error: #FF4757;
+$warning: #FFA500;
+$success: #10B981;
+
+// Gradient Colors - Enhanced for vibrant blob-like effect
+$gradient-bg: $color-dark-blue; // Keep existing dark blue base
+$gradient-purple-primary: #8B5CF6; // Deep purple
+$gradient-purple-secondary: #A855F7; // Medium purple
+$gradient-purple-light: #C084FC; // Light purple
+$gradient-magenta-primary: #EC4899; // Bright magenta
+$gradient-magenta-secondary: #F472B6; // Soft magenta
+$gradient-magenta-bright: #FF1493; // Hot pink
+$gradient-pink-accent: #FF6B9D; // Coral pink
+$gradient-red-accent: #FF4757; // Red accent
+$gradient-orange-glow: #FF8A65; // Orange glow
 
 // Opacity Variations
 $opacity-light: 0.4;

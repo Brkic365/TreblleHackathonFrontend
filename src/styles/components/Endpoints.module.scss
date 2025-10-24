@@ -1,0 +1,219 @@
+@import '../variables';
+
+.endpointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.endpointsTable {
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 100px 100px 100px 120px;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba($bg-tertiary, 0.3);
+  border-bottom: 1px solid $border-primary;
+}
+
+.headerCell {
+  font-size: 0.75rem;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.tableBody {
+  max-height: 400px;
+  overflow-y: auto;
+  
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba($bg-tertiary, 0.2);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary, 0.6);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba($primary, 0.8);
+    }
+  }
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 100px 100px 100px 120px;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid $border-secondary;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($bg-primary, 0.1);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.tableCell {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: $text-primary;
+  min-width: 0;
+}
+
+.methodBadge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.endpointPath {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  word-break: break-all;
+  flex: 1;
+  
+  // Highlight parameter placeholders
+  :global(.param) {
+    color: $accent-primary;
+    font-weight: 600;
+    background: rgba($accent-primary, 0.1);
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba($accent-primary, 0.3);
+  }
+}
+
+.endpointCount {
+  font-size: 0.75rem;
+  color: $text-muted;
+  margin-left: 0.5rem;
+  font-style: italic;
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background: rgba($bg-tertiary, 0.3);
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .headerCell {
+    display: none;
+  }
+
+  .tableCell {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba($border-secondary, 0.3);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &::before {
+      content: attr(data-label);
+      font-size: 0.75rem;
+      color: $text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      min-width: 80px;
+    }
+  }
+}
+
+// Loading and empty states - DEPRECATED: Now using CommonState component
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: $text-muted;
+
+  .spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid rgba($primary, 0.2);
+    border-top: 2px solid $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: $text-muted;
+
+  .emptyIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,158 @@
+@import '../variables';
+
+.endpointsMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.filters {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.filterLabel {
+  font-size: 0.75rem;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: rgba($bg-primary, 0.3);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  color: $text-primary;
+  font-size: 0.875rem;
+  min-width: 120px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($bg-primary, 0.5);
+    border-color: $primary;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+}
+
+.selectContent {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba($bg-secondary, 0.95);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  margin-top: 0.25rem;
+}
+
+.selectItem {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  color: $text-primary;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($primary, 0.1);
+    color: $primary;
+  }
+
+  &[data-highlighted] {
+    background: rgba($primary, 0.1);
+    color: $primary;
+  }
+}
+
+.viewMode {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba($bg-primary, 0.3);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+
+.viewButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($bg-tertiary, 0.3);
+    color: $text-primary;
+  }
+
+  &.active {
+    background: $primary;
+    color: white;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .endpointsMenu {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filterGroup {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .filterLabel {
+    min-width: 80px;
+    margin-bottom: 0;
+  }
+
+  .selectTrigger {
+    flex: 1;
+  }
+}

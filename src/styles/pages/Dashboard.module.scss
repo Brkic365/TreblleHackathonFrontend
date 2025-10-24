@@ -1,0 +1,189 @@
+@import '../variables';
+
+// Mobile-first base styles
+.dashboard {
+  min-height: 100vh;
+  padding: 6rem 1rem 2rem 1rem; // Added top padding for navbar overlap
+  background: linear-gradient(135deg, $bg-primary 0%, $secondary 100%);
+}
+
+.dashboardContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Empty State Styles
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.emptyStateContent {
+  text-align: center;
+  max-width: 500px;
+
+  h1 {
+    color: $text-primary;
+    font-family: "Michroma", sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
+  }
+
+  p {
+    color: $text-secondary;
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.125rem;
+    margin: 0 0 2rem 0;
+  }
+}
+
+// Populated State Styles
+.populatedState {
+  .dashboardHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    h1 {
+      color: $text-primary;
+      font-family: "Michroma", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .endpointsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-height: calc(100vh - 12rem); // Account for navbar and header
+    overflow-y: auto;
+    padding-right: 0.5rem; // Space for scrollbar
+    
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba($bg-tertiary, 0.3);
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, $primary, $secondary);
+      border-radius: 3px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: linear-gradient(135deg, lighten($primary, 10%), lighten($secondary, 10%));
+      }
+    }
+  }
+}
+
+// Mobile (480px and up)
+@media (min-width: 480px) {
+  .dashboard {
+    padding: 6.5rem 1.5rem 2.5rem 1.5rem;
+  }
+
+  .emptyStateContent {
+    h1 {
+      font-size: 2.25rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+    }
+  }
+
+  .populatedState {
+    .dashboardHeader h1 {
+      font-size: 2rem;
+    }
+  }
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .dashboard {
+    padding: 7rem 2rem 3rem 2rem;
+  }
+
+  .emptyStateContent {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.375rem;
+    }
+  }
+
+  .populatedState {
+    .dashboardHeader {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      h1 {
+        text-align: left;
+        font-size: 2.25rem;
+      }
+    }
+
+    .endpointsGrid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-height: calc(100vh - 13rem);
+    }
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .dashboard {
+    padding: 7.5rem 2rem 4rem 2rem;
+  }
+
+  .emptyStateContent {
+    h1 {
+      font-size: 3rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+    }
+  }
+
+  .populatedState {
+    .dashboardHeader h1 {
+      font-size: 2.5rem;
+    }
+
+    .endpointsGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      max-height: calc(100vh - 14rem);
+    }
+  }
+}
+
+// Large Desktop (1200px and up)
+@media (min-width: 1200px) {
+  .populatedState {
+    .endpointsGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+      max-height: calc(100vh - 15rem);
+    }
+  }
+}

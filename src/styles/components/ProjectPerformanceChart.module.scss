@@ -1,0 +1,205 @@
+@import '../variables';
+
+.chartContainer {
+  background: rgba($bg-secondary, 0.6);
+  border: 1px solid $border-primary;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.chartHeader {
+  margin-bottom: 1.5rem;
+}
+
+.chartTitle {
+  font-family: "Michroma", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: $text-primary;
+  margin: 0 0 0.5rem 0;
+}
+
+.chartSubtitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  color: $text-muted;
+  margin: 0;
+}
+
+.chartContent {
+  height: 300px;
+}
+
+.loadingState,
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 1rem;
+  color: $text-muted;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba($primary, 0.3);
+  border-top: 3px solid $primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.tooltip {
+  background: rgba($bg-secondary, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.tooltipTitle {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 0.75rem;
+}
+
+.tooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tooltipItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tooltipLabel {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.tooltipValue {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.tableView {
+  margin-top: 1.5rem;
+  
+  h4 {
+    margin: 0 0 1rem 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tableRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: rgba($bg-primary, 0.2);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.projectName {
+  min-width: 120px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-primary;
+}
+
+.latencyBar {
+  flex: 1;
+  height: 8px;
+  background: rgba($bg-primary, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.latencyFill {
+  height: 100%;
+  background: linear-gradient(90deg, #E1207A 0%, #9103EB 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.latencyValue {
+  min-width: 60px;
+  text-align: right;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $primary;
+}
+
+.debugInfo {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba($bg-primary, 0.2);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  
+  p {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.75rem;
+    color: $text-muted;
+    
+    &:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .chartContainer {
+    padding: 1rem;
+  }
+
+  .chartTitle {
+    font-size: 1.125rem;
+  }
+
+  .chartContent {
+    height: 250px;
+  }
+
+  .loadingState,
+  .emptyState {
+    height: 250px;
+  }
+}

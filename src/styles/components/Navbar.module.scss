@@ -1,89 +1,132 @@
 @import '../variables';
 
+// Mobile-first base styles (default for smallest screens)
 .navbar {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 95%;
-    max-width: 80rem;
-  
-    .navbarContent {
+  position: fixed;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 95%;
+  max-width: 100%;
+
+  .navbarContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid $border-primary;
+    box-shadow: inset 0px 1px 1px rgba($text-primary, 0.5);
+  }
+
+  .leftSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    .logo {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+    }
+
+    .brandText {
+      color: $text-primary;
+      font-size: 1rem;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 100;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  }
+
+  .rightSection {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+// Mobile (480px and up)
+@media (min-width: 480px) {
+  .navbar {
+    top: 0.75rem;
+    width: 95%;
+
+    .navbarContent {
+      padding: 0.75rem 1rem;
+    }
+
+    .leftSection {
+      .brandText {
+        font-size: 1.1rem;
+        letter-spacing: 1.5px;
+      }
+    }
+  }
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .navbar {
+    top: 1rem;
+    width: 90%;
+    max-width: 80rem;
+
+    .navbarContent {
+      flex-direction: row;
+      justify-content: space-between;
       padding: 0.75rem 1rem;
       border-radius: 5rem;
-      position: relative;
-  
-      background: rgba($bg-secondary, $opacity-light); 
-
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-
-      border: 1px solid $border-primary;
-      box-shadow: inset 0px 1px 1px rgba($text-primary, 0.5);
     }
-  
+
     .leftSection {
-      display: flex;
-      align-items: center;
+      justify-content: flex-start;
       gap: 0.75rem;
-  
-      .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-  
+
       .brandText {
-        color: $text-primary;
         font-size: 1.2rem;
-        font-family: "DM Sans", sans-serif;
-  
-        font-weight: 100;
         letter-spacing: 2px;
-        text-transform: uppercase;
       }
     }
-  
+
     .rightSection {
-      display: flex;
-      align-items: center;
+      width: auto;
+      justify-content: flex-end;
+      gap: 1rem;
     }
   }
-  
-  @media (max-width: 480px) {
-    .navbar {
-      .navbarContent {
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 1rem;
-        .leftSection { justify-content: center; }
-        .rightSection {
-          width: 100%;
-          justify-content: center;
-        }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .navbar {
+    .navbarContent {
+      padding: 1rem 1.5rem;
+    }
+
+    .leftSection {
+      .brandText {
+        font-size: 1.3rem;
       }
     }
   }
-  
-  @media (min-width: 768px) {
-    .navbar {
-      top: 1.25rem;
-      width: 90%;
-      .navbarContent {
-        padding: 1rem 1.5rem;
-        .leftSection { .brandText { font-size: 1.3rem; } }
-      }
+}
+
+// Large Desktop (1200px and up)
+@media (min-width: 1200px) {
+  .navbar {
+    .navbarContent {
+      padding: 1rem 2rem;
     }
   }
-  
-  @media (min-width: 1024px) {
-    .navbar {
-      .navbarContent {
-        padding: 1rem 2rem;
-      }
-    }
-  }
+}

@@ -1,50 +1,131 @@
 @import '../variables';
 
+// Mobile-first base styles (default for smallest screens)
 .button {
-    color: $text-primary;
-    border: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    
-    box-shadow: inset 0px -2px 4px $shadow-primary;
-    
-    &:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
-      box-shadow: 
-        inset 0px -2px 4px $shadow-primary,
-        0px 4px 12px $shadow-primary;
-    }
-    
-    &:active {
-      transform: translateY(0);
-      filter: brightness(1);
-    }
+  color: $text-primary;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: inset 0px -2px 4px $shadow-primary;
+  
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
 
-    .buttonText {
-        font-size: 0.875rem;
-        font-weight: 600;
-        font-family: 'Inter', sans-serif;
-    }
+  .buttonText {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+  }
 }
 
 .red {
-    background: $primary;
+  background: $primary;
 }
 
-@media (max-width: 480px) {
-    .ctaButton { 
-        width: 100%; max-width: 17.5rem; 
-    }
+.transparent {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $border-primary;
+  box-shadow: inset 0px 1px 1px rgba($text-primary, 0.5);
 }
+
+.sizeM {
+  padding: 0.6rem 1rem;
   
-@media (min-width: 768px) {
-    .ctaButton { 
-        padding: 0.75rem 1.5rem; 
-        .buttonText {
-            font-size: 0.875rem;
-        }
+  .buttonText {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.sizeL {
+  padding: 0.7rem 1.2rem;
+  
+  .buttonText {
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+// Mobile (480px and up)
+@media (min-width: 480px) {
+  .button {
+    padding: 0.65rem 1.1rem;
+    max-width: 17.5rem;
+    
+    .buttonText {
+      font-size: 0.85rem;
     }
+  }
+
+  .sizeM {
+    padding: 0.65rem 1.1rem;
+    
+    .buttonText {
+      font-size: 0.85rem;
+    }
+  }
+
+  .sizeL {
+    padding: 0.75rem 1.3rem;
+    
+    .buttonText {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .button {
+    width: auto;
+    max-width: none;
+    padding: 0.7rem 1.4rem;
+    
+    .buttonText {
+      font-size: 0.875rem;
+    }
+  }
+
+  .sizeM {
+    padding: 0.7rem 1.4rem;
+    
+    .buttonText {
+      font-size: 0.875rem;
+    }
+  }
+
+  .sizeL {
+    padding: 0.8rem 1.6rem;
+    
+    .buttonText {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .sizeL {
+    padding: 0.9rem 1.8rem;
+    
+    .buttonText {
+      font-size: 1.1rem;
+    }
+  }
 }
