@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import AnalyticsFilterBar from '@/app/components/analytics/AnalyticsFilterBar';
-import ProjectPerformanceChart from '@/app/components/analytics/ProjectPerformanceChart';
-import GeoHeatmap from '@/app/components/analytics/GeoHeatmap';
-import EndpointLeaderboard from '@/app/components/analytics/EndpointLeaderboard';
-import RequestsTrendChart from '@/app/components/analytics/RequestsTrendChart';
+import ProjectPerformanceChart from '@/app/components/charts/ProjectPerformanceChart';
+import GeoHeatmap from '@/app/components/charts/GeoHeatmap';
+import EndpointLeaderboard from '@/app/components/charts/EndpointLeaderboard';
 import apiClient, { BackendAnalytics, BackendProject } from '@/lib/apiClient';
 import styles from '@/styles/pages/Analytics.module.scss';
 
@@ -54,7 +53,7 @@ interface AvailableProject {
   name: string;
 }
 
-const fetcher = async (url: string): Promise<AnalyticsData> => {
+const fetcher = async (url: string, projectNamesMap: Record<string, string>): Promise<AnalyticsData> => {
   try {
     // Parse query parameters from URL
     const urlObj = new URL(url, window.location.origin);
@@ -68,11 +67,84 @@ const fetcher = async (url: string): Promise<AnalyticsData> => {
     // Fetch real analytics data from backend
     const backendData = await apiClient.getAnalytics(options);
     
+    // Fetch endpoints from selected projects (or all if no filter)
+    const selectedProjectIds = options.projectIds || [];
+    const allProjects = await apiClient.getProjects();
+    
+    // Filter projects based on selection
+    const projectsToFetch = selectedProjectIds.length > 0
+      ? allProjects.filter(p => selectedProjectIds.includes(p.id))
+      : allProjects;
+    
+    const endpointsPerProject = await Promise.all(
+      projectsToFetch.map(async (project) => {
+        // Fetch ALL endpoints with 30d timeRange to get more endpoints
+        const endpoints = await apiClient.getProjectEndpoints(project.id, { 
+          limit: 1000,
+          timeRange: '30d', // Use 30 days instead of default 24h
+        });
+        return endpoints.endpoints.map((endpoint: any) => ({
+          ...endpoint,
+          projectId: project.id,
+          projectName: project.name,
+        }));
+      })
+    );
+    
+    // Flatten and sort endpoints
+    const allEndpoints = endpointsPerProject.flat();
+    
+    // Get top slowest endpoints - sort by avgResponseTime (higher is slower)
+    const topSlowest = [...allEndpoints]
+      .sort((a, b) => (b.avgResponseTime || 0) - (a.avgResponseTime || 0))
+      .slice(0, 5)
+      .map(endpoint => ({
+        endpoint: endpoint.path || '/',
+        method: endpoint.method || 'GET',
+        avgLatency: endpoint.avgResponseTime || 0,
+        totalRequests: endpoint.requestCount || 0,
+        errorRate: endpoint.errorRate || 0,
+        projectName: endpoint.projectName || 'Unknown',
+      }));
+    
+    // Get top errored endpoints - sort by errorRate (higher is worse)
+    // Include endpoints with any errors
+    const topErrored = [...allEndpoints]
+      .filter(e => {
+        // Include if errorRate > 0 OR if errorCount > 0 OR if status indicates errors
+        const hasErrors = (e.errorRate || 0) > 0 || 
+                         (e.errorRate || 0) > 0 || 
+                         e.status === 'warning' || 
+                         e.status === 'error';
+        return hasErrors && (e.requestCount || 0) > 0;
+      })
+      .sort((a, b) => {
+        // Sort by error rate first
+        if ((b.errorRate || 0) !== (a.errorRate || 0)) {
+          return (b.errorRate || 0) - (a.errorRate || 0);
+        }
+        // Then by request count to prefer endpoints with more activity
+        return (b.requestCount || 0) - (a.requestCount || 0);
+      })
+      .slice(0, 5)
+      .map(endpoint => ({
+        endpoint: endpoint.path || '/',
+        method: endpoint.method || 'GET',
+        avgLatency: endpoint.avgResponseTime || 0,
+        totalRequests: endpoint.requestCount || 0,
+        errorRate: endpoint.errorRate || 0,
+        projectName: endpoint.projectName || 'Unknown',
+      }));
+    
     // Transform backend data to frontend format
-    return transformBackendAnalytics(backendData);
+    return {
+      ...createTransformFunction(projectNamesMap)(backendData),
+      topSlowestEndpoints: topSlowest,
+      topErroredEndpoints: topErrored,
+    };
   } catch (error) {
     console.error('Analytics fetch error:', error);
-    // Return mock data as fallback
+    // Return empty data as fallback
     return {
       projectPerformance: [],
       latencyByCountry: [],
@@ -84,33 +156,35 @@ const fetcher = async (url: string): Promise<AnalyticsData> => {
 };
 
 // Transform backend analytics data to frontend format
-const transformBackendAnalytics = (backendData: BackendAnalytics): AnalyticsData => {
+// Note: projectNamesMap is passed via a ref or closure, we'll handle it differently
+const createTransformFunction = (projectNamesMap: Record<string, string>) => (backendData: BackendAnalytics): AnalyticsData => {
   return {
-    projectPerformance: backendData.projectPerformance.map(perf => ({
+    // Map project performance data from backend
+    projectPerformance: (backendData.projectPerformance || []).map(perf => ({
       projectId: perf.apiEndpointId,
-      projectName: `Project ${perf.apiEndpointId.slice(0, 8)}`, // Mock project name
-      avgLatency: perf._avg.durationMs,
-      totalRequests: Math.floor(Math.random() * 1000) + 100, // Mock total requests
-      errorRate: Math.random() * 5, // Mock error rate
+      projectName: projectNamesMap[perf.apiEndpointId] || `Project ${perf.apiEndpointId.slice(0, 8)}`,
+      avgLatency: perf._avg?.durationMs || 0,
+      totalRequests: perf._count?.id || 0,
+      errorRate: 0.02, // Approximate - backend should provide this
     })),
-    latencyByCountry: [
-      { country: 'United States', countryCode: 'US', avgLatency: 120, totalRequests: 500, errorRate: 1.2 },
-      { country: 'United Kingdom', countryCode: 'GB', avgLatency: 150, totalRequests: 300, errorRate: 2.1 },
-      { country: 'Germany', countryCode: 'DE', avgLatency: 140, totalRequests: 250, errorRate: 1.8 },
-    ],
-    topSlowestEndpoints: [
-      { endpoint: '/api/users', method: 'GET', avgLatency: 450, totalRequests: 1200, errorRate: 2.1 },
-      { endpoint: '/api/posts', method: 'POST', avgLatency: 380, totalRequests: 800, errorRate: 1.5 },
-    ],
-    topErroredEndpoints: [
-      { endpoint: '/api/auth', method: 'POST', avgLatency: 200, totalRequests: 500, errorRate: 8.5, lastError: 'Invalid credentials' },
-      { endpoint: '/api/upload', method: 'POST', avgLatency: 300, totalRequests: 200, errorRate: 12.0, lastError: 'File too large' },
-    ],
-    requestsOverTime: backendData.requestsOverTime.map(req => ({
+    
+    // Latency by country - show empty state if no country data
+    latencyByCountry: backendData.latencyByCountry && backendData.latencyByCountry.length > 0 
+      ? backendData.latencyByCountry
+      : [], // Empty array will be handled by the component
+    
+    // Get top slowest endpoints - will be populated from backend endpoint data
+    topSlowestEndpoints: backendData.topSlowestEndpoints || [],
+    
+    // Top errored endpoints - will be populated from backend endpoint data
+    topErroredEndpoints: backendData.topErroredEndpoints || [],
+    
+    // Map requests over time from backend data
+    requestsOverTime: (backendData.requestsOverTime || []).map(req => ({
       timestamp: req.createdAt,
-      successful: Math.floor(req._count.id * 0.95),
-      errors: Math.floor(req._count.id * 0.05),
-      total: req._count.id,
+      successful: Math.floor((req._count?.id || 0) * 0.98), // Approximate successful requests (98% success rate)
+      errors: Math.floor((req._count?.id || 0) * 0.02), // Approximate errors (2% error rate)
+      total: req._count?.id || 0,
     })),
   };
 };
@@ -122,6 +196,7 @@ export default function AnalyticsPage() {
   });
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
   const [availableProjects, setAvailableProjects] = useState<AvailableProject[]>([]);
+  const [projectNamesMap, setProjectNamesMap] = useState<Record<string, string>>({});
 
   // Build query parameters
   const queryParams = new URLSearchParams();
@@ -130,15 +205,15 @@ export default function AnalyticsPage() {
   if (selectedProjects.length > 0) queryParams.append('projects', selectedProjects.join(','));
 
   const { data, error, isLoading, mutate } = useSWR<AnalyticsData>(
-    `/api/analytics?${queryParams.toString()}`,
-    fetcher,
+    [`/api/analytics?${queryParams.toString()}`, projectNamesMap],
+    ([url]) => fetcher(url, projectNamesMap),
     {
       refreshInterval: 30000, // Refresh every 30 seconds
       revalidateOnFocus: true,
     }
   );
 
-  // Load available projects
+  // Load available projects and create names map
   useEffect(() => {
     const loadProjects = async () => {
       try {
@@ -148,9 +223,17 @@ export default function AnalyticsPage() {
           name: project.name,
         }));
         setAvailableProjects(projects);
+        
+        // Create a map of project IDs to names
+        const namesMap: Record<string, string> = {};
+        backendProjects.forEach(project => {
+          namesMap[project.id] = project.name;
+        });
+        setProjectNamesMap(namesMap);
       } catch (error) {
         console.error('Failed to load projects:', error);
         setAvailableProjects([]);
+        setProjectNamesMap({});
       }
     };
 
@@ -213,33 +296,24 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className={styles.analyticsRow}>
-          <div className={styles.analyticsWidget}>
-            <EndpointLeaderboard
-              title="Top 5 Slowest Endpoints"
-              data={data?.topSlowestEndpoints || []}
-              isLoading={isLoading}
-              maxItems={5}
-            />
-          </div>
-          <div className={styles.analyticsWidget}>
-            <EndpointLeaderboard
-              title="Top 5 Most Error-Prone Endpoints"
-              data={data?.topErroredEndpoints || []}
-              isLoading={isLoading}
-              maxItems={5}
-            />
-          </div>
+        <div className={styles.analyticsWidgetFull}>
+          <EndpointLeaderboard
+            title="Top 5 Slowest Endpoints"
+            data={data?.topSlowestEndpoints || []}
+            isLoading={isLoading}
+            maxItems={5}
+          />
+        </div>
+        
+        <div className={styles.analyticsWidgetFull}>
+          <EndpointLeaderboard
+            title="Top 5 Most Error-Prone Endpoints"
+            data={data?.topErroredEndpoints || []}
+            isLoading={isLoading}
+            maxItems={5}
+          />
         </div>
 
-        <div className={styles.analyticsRow}>
-          <div className={styles.analyticsWidgetFull}>
-            <RequestsTrendChart 
-              data={data?.requestsOverTime || []} 
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

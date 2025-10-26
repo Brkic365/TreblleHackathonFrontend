@@ -105,8 +105,8 @@ export default function RequestsTrendChart({ data, isLoading }: RequestsTrendCha
   return (
     <div className={styles.chartContainer}>
       <div className={styles.chartHeader}>
-        <h3 className={styles.chartTitle}>Request Trends</h3>
-        <p className={styles.chartSubtitle}>Successful vs error requests over time</p>
+        <h3 className={styles.chartTitle}>Request Volume Over Time</h3>
+        <p className={styles.chartSubtitle}>Total requests and error rate trends</p>
       </div>
       
       <div className={styles.chartContent}>

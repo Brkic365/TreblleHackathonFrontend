@@ -56,6 +56,8 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
   };
 
   // Fetch endpoints data from backend
+  // Note: We don't send timeRange to filter endpoints, only for stats calculation
+  // This ensures ALL endpoints are displayed regardless of activity in the timeframe
   const { data: endpointsData, error, isLoading } = useSWR(
     `endpoints-${projectId}-${currentPage}-${JSON.stringify(filters)}`,
     () => apiClient.getProjectEndpoints(projectId, {
@@ -63,7 +65,9 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
       limit: itemsPerPage,
       method: filters.method !== 'all' ? filters.method : undefined,
       status: filters.status !== 'all' ? filters.status : undefined,
-      timeRange: filters.timeRange !== '24h' ? filters.timeRange : undefined,
+      // Don't send timeRange to backend - we want ALL endpoints shown
+      // The backend will use timeRange internally for calculating stats but won't filter
+      timeRange: filters.timeRange,
       sortBy: 'path',
       order: 'asc'
     })
@@ -185,6 +189,11 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
 
   // Empty state
   if (!endpoints || endpoints.length === 0) {
+    const timeRangeLabel = filters.timeRange === '1h' ? 'last hour' : 
+                           filters.timeRange === '24h' ? 'last 24 hours' :
+                           filters.timeRange === '7d' ? 'last 7 days' :
+                           'last 30 days';
+    
     return (
       <div className={styles.endpoints}>
         <div className={styles.endpointsHeader}>
@@ -200,8 +209,8 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
           />
           <CommonState 
             type="empty" 
-            title="No endpoints found"
-            message="No API endpoints have been detected for this project yet."
+            title="No active endpoints found"
+            message={`No endpoints had activity in the ${timeRangeLabel}. Try selecting a longer time range or check if any requests have been made.`}
             icon="📡"
           />
         </div>
@@ -213,7 +222,9 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
     <div className={styles.endpoints}>
       <div className={styles.endpointsHeader}>
         <h1 className={styles.title}>API Endpoints</h1>
-        <p className={styles.subtitle}>Monitor all endpoints for this project</p>
+        <p className={styles.subtitle}>
+          Showing {pagination?.total || endpoints.length} active endpoint{pagination?.total !== 1 ? 's' : ''} ({filters.timeRange === '1h' ? 'last hour' : filters.timeRange === '24h' ? 'last 24 hours' : filters.timeRange === '7d' ? 'last 7 days' : 'last 30 days'})
+        </p>
       </div>
       
       <div className={styles.endpointsContent}>
@@ -229,6 +240,7 @@ export default function ProjectEndpoints({ params }: ProjectEndpointsProps) {
           onEndpointClick={handleEndpointClick}
           viewMode={viewMode}
           isLoading={isLoading}
+          projectId={projectId}
         />
         
         {renderPagination()}

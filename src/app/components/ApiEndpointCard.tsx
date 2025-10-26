@@ -89,16 +89,23 @@ export default function ApiEndpointCard({ endpoint, onViewRequests }: ApiEndpoin
     return count.toString();
   };
 
+  const getTotalRequests = () => {
+    // Show actual total requests from the project, not just 24h
+    return endpoint.totalRequests || 0;
+  };
+
   const calculateRequestsPerMinute = () => {
-    if (!kpisData?.totalRequests) return 0;
+    const total = getTotalRequests();
+    if (!total) return 0;
     
     // Calculate requests per minute based on 24h data
-    const requestsPerHour = kpisData.totalRequests / 24;
+    const requestsPerHour = total / 24;
     const requestsPerMinute = requestsPerHour / 60;
     return Math.round(requestsPerMinute);
   };
 
   const getEndpointsCount = () => {
+    // Get the total count from the pagination
     return endpointsData?.pagination?.total || 0;
   };
 
@@ -128,7 +135,7 @@ export default function ApiEndpointCard({ endpoint, onViewRequests }: ApiEndpoin
       <div className={styles.cardMiddle}>
         <div className={styles.metricItem}>
           <span className={styles.metricLabel}>Requests</span>
-          <span className={styles.metricValue}>{formatRequestCount(endpoint.totalRequests)}</span>
+          <span className={styles.metricValue}>{formatRequestCount(getTotalRequests())}</span>
         </div>
         
         <div className={styles.metricItem}>

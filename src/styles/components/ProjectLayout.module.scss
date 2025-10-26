@@ -15,6 +15,10 @@
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .headerContent {
@@ -50,6 +54,11 @@
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+
+  @media (max-width: 640px) {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+  }
 }
 
 .projectName {
@@ -70,6 +79,13 @@
   min-width: 20rem;
   z-index: 1000;
   overflow: hidden;
+
+  @media (max-width: 640px) {
+    min-width: calc(100vw - 2rem);
+    max-width: calc(100vw - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .projectOption {
@@ -214,8 +230,9 @@
   overflow-y: auto;
   margin-left: 12rem; /* Account for the secondary sidebar */
 
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     margin-left: 0;
+    padding: 1rem;
   }
 }
 

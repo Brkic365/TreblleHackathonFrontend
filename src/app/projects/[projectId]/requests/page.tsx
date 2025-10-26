@@ -212,6 +212,7 @@ export default function ProjectRequests({ params }: ProjectRequestsProps) {
             viewMode={viewMode} 
             onViewModeChange={setViewMode}
             onFilterChange={handleFilterChange}
+            currentFilters={filters}
           />
           <CommonState 
             type="empty" 
@@ -235,6 +236,7 @@ export default function ProjectRequests({ params }: ProjectRequestsProps) {
           viewMode={viewMode} 
           onViewModeChange={setViewMode}
           onFilterChange={handleFilterChange}
+          currentFilters={filters}
         />
         <Requests 
           viewMode={viewMode} 

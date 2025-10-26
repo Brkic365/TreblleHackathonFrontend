@@ -74,7 +74,8 @@ export default function Projects() {
                 // Get the total count of requests for this project
                 const requestsData = await apiClient.getProjectRequests(backendProject.id, {
                   page: 1,
-                  limit: 1 // We only need the total count, not the actual requests
+                  limit: 1, // We only need the total count, not the actual requests
+                  timeRange: '30d'
                 });
                 const requestCount = requestsData.pagination.total;
                 return convertBackendProject(backendProject, requestCount);

@@ -27,19 +27,22 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email) {
+        if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
         try {
-          // Direct backend authentication call (avoiding circular dependency)
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/session`, {
+          // Call backend login endpoint to validate credentials
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'x-internal-api-key': process.env.NEXT_PUBLIC_INTERNAL_API_KEY || '',
             },
-            body: JSON.stringify({ email: credentials.email }),
+            body: JSON.stringify({ 
+              email: credentials.email,
+              password: credentials.password 
+            }),
           });
 
           if (response.ok) {
@@ -49,17 +52,17 @@ export const authOptions: NextAuthOptions = {
               return {
                 id: data.user.id,
                 email: data.user.email,
-                name: data.user.email.split('@')[0], // Use email prefix as name
+                name: data.user.name || data.user.email.split('@')[0],
                 accessToken: data.token, // Store backend JWT
               };
             } else {
               console.error('No token or user in backend response:', data);
-              throw new Error('Invalid response from backend');
+              return null;
             }
           } else {
             const errorText = await response.text();
             console.error('Credentials backend authentication failed:', response.status, errorText);
-            throw new Error(`Backend auth failed: ${response.status} ${errorText}`);
+            return null;
           }
         } catch (error) {
           console.error('Credentials backend authentication error:', error);

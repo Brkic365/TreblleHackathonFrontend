@@ -25,9 +25,10 @@ interface EndpointsProps {
   onEndpointClick: (endpoint: EndpointItem) => void;
   viewMode: 'list' | 'table';
   isLoading?: boolean;
+  projectId: string;
 }
 
-export default function Endpoints({ endpoints, onEndpointClick, viewMode, isLoading }: EndpointsProps) {
+export default function Endpoints({ endpoints, onEndpointClick, viewMode, isLoading, projectId }: EndpointsProps) {
   // Loading state
   if (isLoading) {
     return <CommonState type="loading" message="Loading endpoints..." />;
@@ -75,7 +76,7 @@ export default function Endpoints({ endpoints, onEndpointClick, viewMode, isLoad
               className={styles.tableRow}
               onClick={() => handleEndpointClick(endpoint)}
             >
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Method">
                 <span 
                   className={styles.methodBadge}
                   style={{ 
@@ -86,7 +87,7 @@ export default function Endpoints({ endpoints, onEndpointClick, viewMode, isLoad
                   {endpoint.method}
                 </span>
               </div>
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Path">
                 <span 
                   className={styles.endpointPath}
                   dangerouslySetInnerHTML={{ 
@@ -99,24 +100,41 @@ export default function Endpoints({ endpoints, onEndpointClick, viewMode, isLoad
                   </span>
                 )}
               </div>
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Avg Response">
                 {formatResponseTime(endpoint.avgResponseTime)}
               </div>
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Error Rate">
                 {formatErrorRate(endpoint.errorRate)}
               </div>
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Requests">
                 {formatRequestCount(endpoint.requestCount)}
               </div>
-              <div className={styles.tableCell}>
-                <span 
-                  className={styles.statusBadge}
-                  style={{ color: getStatusColor(endpoint.status) }}
-                >
-                  {endpoint.status}
-                </span>
+              <div className={styles.tableCell} data-label="Status">
+                <div className={styles.statusContainer}>
+                  <span 
+                    className={styles.statusBadge}
+                    style={{ color: getStatusColor(endpoint.status) }}
+                  >
+                    {endpoint.status}
+                  </span>
+                  <div className={styles.statusTooltip}>
+                    <div className={styles.tooltipContent}>
+                      {(() => {
+                        const cappedRate = Math.min(endpoint.errorRate, 1);
+                        const errorPercent = (cappedRate * 100).toFixed(1);
+                        if (endpoint.errorRate > 0.1) {
+                          return `⚠️ ${errorPercent}% error rate - High failure rate`;
+                        } else if (endpoint.errorRate > 0) {
+                          return `⚠️ ${errorPercent}% error rate - Some failures detected`;
+                        } else {
+                          return 'No errors detected - All requests successful';
+                        }
+                      })()}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className={styles.tableCell}>
+              <div className={styles.tableCell} data-label="Last Request">
                 {formatLastRequest(endpoint.lastRequest)}
               </div>
             </div>

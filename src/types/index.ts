@@ -4,6 +4,9 @@ export interface DashboardContextType {
   toggleGlobalSidebar: () => void;
   activeProjectId: string | null;
   setActiveProjectId: (projectId: string | null) => void;
+  isMobileSidebarOpen: boolean;
+  toggleMobileSidebar: () => void;
+  setIsMobileSidebarOpen: (isOpen: boolean) => void;
 }
 
 // Sidebar Types

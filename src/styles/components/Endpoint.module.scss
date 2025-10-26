@@ -56,6 +56,22 @@
   word-break: break-all;
   flex: 1;
   min-width: 0;
+  
+  // Highlight parameter placeholders
+  :global(.param) {
+    color: $accent-primary;
+    font-weight: 600;
+    background: rgba($accent-primary, 0.1);
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba($accent-primary, 0.3);
+  }
+}
+
+.statusContainer {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .status {
@@ -66,7 +82,38 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   background: rgba($bg-tertiary, 0.3);
-  flex-shrink: 0;
+}
+
+.statusTooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tooltipContent {
+  padding: 0.5rem 0.75rem;
+  background: rgba($bg-primary, 0.98);
+  border: 1px solid $border-primary;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  color: $text-primary;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 300px;
+  line-height: 1.4;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.statusContainer:hover .statusTooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .endpointMetrics {
@@ -87,6 +134,11 @@
   text-transform: uppercase;
   letter-spacing: 0.025em;
   font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    opacity: 0.9;
+  }
 }
 
 .metricValue {
@@ -94,6 +146,11 @@
   color: $text-primary;
   font-weight: 500;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
 }
 
 // Mobile responsiveness
@@ -120,16 +177,3 @@
   }
 }
 
-.chartSection {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid $border-secondary;
-}
-
-.chartContainer {
-  height: 80px;
-  background: rgba($bg-tertiary, 0.2);
-  border: 1px solid $border-secondary;
-  border-radius: 0.375rem;
-  padding: 0.75rem;
-}

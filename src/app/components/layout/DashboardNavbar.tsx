@@ -12,15 +12,28 @@ interface DashboardNavbarProps {
     image?: string | null;
   };
   onSignOut: () => void;
+  isMobileSidebarOpen?: boolean;
+  onToggleMobileSidebar?: () => void;
 }
 
-export default function DashboardNavbar({ user, onSignOut }: DashboardNavbarProps) {
+export default function DashboardNavbar({ user, onSignOut, isMobileSidebarOpen, onToggleMobileSidebar }: DashboardNavbarProps) {
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
     <nav className={styles.dashboardNavbar}>
       <div className={styles.navbarContent}>
+        {/* Mobile hamburger menu button */}
+        <button 
+          className={styles.mobileMenuButton}
+          onClick={onToggleMobileSidebar}
+          aria-label="Toggle menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
         <div className={styles.logo} onClick={() => router.push('/')}>
           <h1>RunTime</h1>
         </div>

@@ -1,5 +1,7 @@
 @import '../variables';
 
+// Mobile-first responsive breakpoints
+
 .dashboardNavbar {
   position: fixed;
   top: 0;
@@ -22,16 +24,59 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+
+  @media (max-width: 640px) {
+    padding: 0 1rem;
+  }
 }
 
 .logo {
   cursor: pointer;
+  transition: opacity 0.2s ease;
+  
   h1 {
     color: $text-primary;
     font-family: var(--font-michroma);
     font-size: 1.25rem;
     font-weight: 400;
     margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.mobileMenuButton {
+  display: none;
+  background: rgba($bg-secondary, 0.95);
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: $text-primary;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  z-index: 10;
+
+  &:hover {
+    background: rgba($bg-secondary, 1);
+    border-color: $primary;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -89,6 +134,10 @@
   align-items: flex-start;
   gap: 0.125rem;
   min-width: 0;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 }
 
 .userName {

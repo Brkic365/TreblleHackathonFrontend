@@ -51,6 +51,31 @@ export interface BackendAnalytics {
     _avg: {
       durationMs: number;
     };
+    _count?: {
+      id: number;
+      error?: number;
+    };
+  }>;
+  latencyByCountry?: Array<{
+    country: string;
+    countryCode: string;
+    avgLatency: number;
+    totalRequests: number;
+    errorRate: number;
+  }>;
+  topSlowestEndpoints?: Array<{
+    endpoint: string;
+    method: string;
+    avgLatency: number;
+    totalRequests: number;
+    errorRate: number;
+  }>;
+  topErroredEndpoints?: Array<{
+    endpoint: string;
+    method: string;
+    avgLatency: number;
+    totalRequests: number;
+    errorRate: number;
   }>;
   requestsOverTime: Array<{
     createdAt: string;
@@ -310,8 +335,8 @@ const apiClient = {
       params.append('status', options.status);
     }
     
-    // Only send timeRange if it's not the default
-    if (options.timeRange && options.timeRange !== '24h') {
+    // Send timeRange for stats calculation - backend should show ALL endpoints but calculate stats for this timeframe
+    if (options.timeRange) {
       params.append('timeRange', options.timeRange);
     }
     
@@ -351,7 +376,33 @@ const apiClient = {
     email: string; 
     password: string; 
   }): Promise<{ success: boolean; message: string; user?: any }> {
-    return this.request('POST', '/api/auth/register', data);
+    try {
+      const response = await this.request('POST', '/api/auth/register', data);
+      
+      // If backend returns user data directly (with id, email, etc.), consider it a success
+      if (response && (response.success === true || response.id || response.user)) {
+        return {
+          success: true,
+          message: 'User registered successfully',
+          user: response.user || response
+        };
+      }
+      
+      // Otherwise return the response as-is
+      return response;
+    } catch (error) {
+      // If there's an error, return it in the expected format
+      if (error instanceof Error) {
+        return {
+          success: false,
+          message: error.message
+        };
+      }
+      return {
+        success: false,
+        message: 'Failed to register user'
+      };
+    }
   },
 
   // User Profile endpoints

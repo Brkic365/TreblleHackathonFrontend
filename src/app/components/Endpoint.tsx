@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import { TimeSeriesChart } from '@/app/components/charts/TimeSeriesChart';
 import styles from "@/styles/components/Endpoint.module.scss";
+import { formatNormalizedPath } from '@/utils/endpointNormalization';
 
 interface EndpointItem {
   id: string;
@@ -19,17 +19,6 @@ interface EndpointProps {
   endpoint: EndpointItem;
   onClick: () => void;
 }
-
-// Mock performance data for charts
-const mockPerformanceData = [
-  { time: '00:00', value: 120 },
-  { time: '04:00', value: 95 },
-  { time: '08:00', value: 180 },
-  { time: '12:00', value: 220 },
-  { time: '16:00', value: 150 },
-  { time: '20:00', value: 110 },
-  { time: '24:00', value: 125 }
-];
 
 export default function Endpoint({ endpoint, onClick }: EndpointProps) {
   const getMethodColor = (method: string) => {
@@ -57,7 +46,23 @@ export default function Endpoint({ endpoint, onClick }: EndpointProps) {
   };
 
   const formatErrorRate = (rate: number) => {
-    return `${(rate * 100).toFixed(1)}%`;
+    // Cap error rate at 100%
+    const cappedRate = Math.min(rate, 1);
+    return `${(cappedRate * 100).toFixed(1)}%`;
+  };
+  
+  const getStatusReason = () => {
+    // Cap error rate at 100%
+    const cappedErrorRate = Math.min(endpoint.errorRate, 1);
+    const errorRatePercent = (cappedErrorRate * 100).toFixed(1);
+    
+    if (endpoint.errorRate > 0.1) {
+      return `${errorRatePercent}% error rate - High failure rate`;
+    } else if (endpoint.errorRate > 0) {
+      return `${errorRatePercent}% error rate - Some failures detected`;
+    } else {
+      return 'No errors detected - All requests successful';
+    }
   };
 
   const formatRequestCount = (count: number) => {
@@ -65,6 +70,7 @@ export default function Endpoint({ endpoint, onClick }: EndpointProps) {
     if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
     return count.toString();
   };
+
 
   const formatLastRequest = (timestamp: string) => {
     try {
@@ -115,13 +121,23 @@ export default function Endpoint({ endpoint, onClick }: EndpointProps) {
           >
             {endpoint.method}
           </span>
-          <span className={styles.path}>{endpoint.path}</span>
+          <span 
+            className={styles.path}
+            dangerouslySetInnerHTML={{ __html: formatNormalizedPath(endpoint.path) }}
+          />
         </div>
-        <div 
-          className={styles.status}
-          style={{ color: getStatusColor(endpoint.status) }}
-        >
-          {endpoint.status}
+        <div className={styles.statusContainer}>
+          <div 
+            className={styles.status}
+            style={{ color: getStatusColor(endpoint.status) }}
+          >
+            {endpoint.status}
+          </div>
+          <div className={styles.statusTooltip}>
+            <div className={styles.tooltipContent}>
+              {getStatusReason()}
+            </div>
+          </div>
         </div>
       </div>
       
@@ -141,18 +157,6 @@ export default function Endpoint({ endpoint, onClick }: EndpointProps) {
         <div className={styles.metric}>
           <span className={styles.metricLabel}>Last Request</span>
           <span className={styles.metricValue}>{formatLastRequest(endpoint.lastRequest)}</span>
-        </div>
-      </div>
-
-      <div className={styles.chartSection}>
-        <div className={styles.chartContainer}>
-          <TimeSeriesChart
-            data={mockPerformanceData}
-            dataKey="value"
-            gradientId={`endpointChartGradient${endpoint.id}`}
-            gradientColors={['#d946ef', '#7f00ff']}
-            yAxisFormatter={(num) => `${num}ms`}
-          />
         </div>
       </div>
     </div>

@@ -25,6 +25,23 @@
   100% { transform: rotate(360deg); }
 }
 
+// Mobile menu button removed from here - now in DashboardNavbar
+
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
 .dashboardLayout {
   min-height: 100vh;
   height: 100vh; // Lock height to viewport
@@ -34,32 +51,30 @@
   overflow: hidden; // Prevent page scrolling
   padding-top: 3.5rem;
 
-
   .dashboardGrid {
-    display: grid;
+    display: flex;
     flex: 1;
     height: calc(100vh - 4rem); // Subtract navbar height
     min-height: 0; // Important for grid to shrink
-    // Default State: L1 open, L2 hidden
-    grid-template-columns: 250px 100;
-    transition: grid-template-columns 0.3s ease-in-out;
+    position: relative;
 
-    // State when L1 is collapsed (no project selected)
-    &[data-l1-collapsed="true"] {
-      grid-template-columns: 80px 100;
-    }
-
-    // The KEY state: L1 is collapsed AND L2 is visible
-    &[data-l1-collapsed="true"][data-l2-visible="true"] {
-      grid-template-columns: 80px 250px 100;
+    // Mobile: no special grid needed
+    @media (max-width: 768px) {
+      width: 100%;
     }
 
     .mainContent {
-      grid-column: -1; // Always take up the last column
+      flex: 1;
       overflow-y: auto; // Scroll area inside the layout
       padding: 2rem;
-      padding-left: 0;
       min-height: 0; // Important for scrolling to work
+      width: 100%;
+
+      @media (max-width: 768px) {
+        padding: 1rem;
+        padding-top: 1rem;
+        margin-left: 0; // No margin when sidebars are hidden
+      }
     }
   }
 }

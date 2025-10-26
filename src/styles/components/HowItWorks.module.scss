@@ -48,11 +48,21 @@
   text-align: center;
   position: relative;
   padding: 2rem 1rem;
-  background: rgba($bg-secondary, $opacity-light);
+  background: rgba(26, 23, 38, 0.75);
   border-radius: 1rem;
-  border: 1px solid $border-primary;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 
+              0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transform: translateY(-2px);
+  }
 }
 
 .stepIcon {

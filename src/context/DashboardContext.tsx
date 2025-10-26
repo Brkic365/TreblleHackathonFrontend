@@ -9,11 +9,16 @@ const DashboardContext = createContext<DashboardContextType | undefined>(undefin
 export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [isGlobalSidebarCollapsed, setCollapsed] = useState(false);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const toggleGlobalSidebar = () => {
     // Prevent un-collapsing if a project is active
     if (activeProjectId) return;
     setCollapsed(prev => !prev);
+  };
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(prev => !prev);
   };
 
   // This function is the core logic: when a project is selected,
@@ -33,6 +38,9 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       toggleGlobalSidebar,
       activeProjectId,
       setActiveProjectId: handleSetActiveProjectId,
+      isMobileSidebarOpen,
+      toggleMobileSidebar,
+      setIsMobileSidebarOpen,
     }}>
       {children}
     </DashboardContext.Provider>

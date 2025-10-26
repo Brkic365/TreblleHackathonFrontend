@@ -10,6 +10,7 @@ interface EndpointData {
   totalRequests: number;
   errorRate: number;
   lastError?: string;
+  projectName?: string;
 }
 
 interface EndpointLeaderboardProps {
@@ -87,6 +88,7 @@ export default function EndpointLeaderboard({
         <div className={styles.leaderboardTable}>
           <div className={styles.leaderboardTableHeader}>
             <div className={styles.leaderboardTableHeaderCell}>Endpoint</div>
+            <div className={styles.leaderboardTableHeaderCell}>Project</div>
             <div className={styles.leaderboardTableHeaderCell}>Method</div>
             <div className={styles.leaderboardTableHeaderCell}>Latency</div>
             <div className={styles.leaderboardTableHeaderCell}>Requests</div>
@@ -96,13 +98,18 @@ export default function EndpointLeaderboard({
           <div className={styles.leaderboardTableBody}>
             {displayData.map((item, index) => (
               <div key={`${item.method}-${item.endpoint}`} className={styles.leaderboardTableRow}>
-                <div className={styles.leaderboardTableCell}>
+                <div className={styles.leaderboardTableCell} data-label="Endpoint">
                   <div className={styles.endpointInfo}>
                     <div className={styles.endpointRank}>#{index + 1}</div>
                     <code className={styles.endpointPath}>{item.endpoint}</code>
                   </div>
                 </div>
-                <div className={styles.leaderboardTableCell}>
+                <div className={styles.leaderboardTableCell} data-label="Project">
+                  <span className={styles.projectName}>
+                    {item.projectName || 'Unknown'}
+                  </span>
+                </div>
+                <div className={styles.leaderboardTableCell} data-label="Method">
                   <span 
                     className={styles.methodBadge}
                     style={{ backgroundColor: getMethodColor(item.method) }}
@@ -110,17 +117,17 @@ export default function EndpointLeaderboard({
                     {item.method}
                   </span>
                 </div>
-                <div className={styles.leaderboardTableCell}>
+                <div className={styles.leaderboardTableCell} data-label="Latency">
                   <span className={styles.latencyValue}>
                     {item.avgLatency}ms
                   </span>
                 </div>
-                <div className={styles.leaderboardTableCell}>
+                <div className={styles.leaderboardTableCell} data-label="Requests">
                   <span className={styles.requestCount}>
                     {item.totalRequests.toLocaleString()}
                   </span>
                 </div>
-                <div className={styles.leaderboardTableCell}>
+                <div className={styles.leaderboardTableCell} data-label="Error Rate">
                   <div className={styles.errorInfo}>
                     <span 
                       className={styles.errorRate}

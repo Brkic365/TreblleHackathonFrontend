@@ -76,10 +76,6 @@ export default function ProjectPerformanceChart({ data, isLoading }: ProjectPerf
           </svg>
           <span>No performance data available</span>
         </div>
-        <div className={styles.debugInfo}>
-          <p>Debug: data = {JSON.stringify(data)}</p>
-          <p>Debug: data.length = {data?.length || 'undefined'}</p>
-        </div>
       </div>
     );
   }
@@ -152,12 +148,6 @@ export default function ProjectPerformanceChart({ data, isLoading }: ProjectPerf
             </div>
           ))}
         </div>
-      </div>
-      
-      {/* Debug info */}
-      <div className={styles.debugInfo}>
-        <p>Data points: {data.length}</p>
-        <p>Sample data: {data.length > 0 ? `${data[0].projectName}: ${data[0].avgLatency}ms` : 'No data'}</p>
       </div>
     </div>
   );

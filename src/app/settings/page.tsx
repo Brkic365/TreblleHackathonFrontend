@@ -160,7 +160,13 @@ export default function SettingsPage() {
         <form onSubmit={handleProfileUpdate} className={styles.form}>
           <div className={styles.avatarSection}>
             <div className={styles.avatar}>
-              <img src={userProfile.avatar} alt="Profile" />
+              {userProfile.avatar && userProfile.avatar !== '/api/placeholder/40/40' ? (
+                <img src={userProfile.avatar} alt="Profile" />
+              ) : (
+                <div className={styles.avatarPlaceholder}>
+                  {userProfile.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+              )}
             </div>
           </div>
 

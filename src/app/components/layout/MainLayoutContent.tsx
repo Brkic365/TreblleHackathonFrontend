@@ -14,7 +14,7 @@ export function MainLayoutContent({ children }: LayoutProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { isGlobalSidebarCollapsed, activeProjectId } = useDashboard();
+  const { isGlobalSidebarCollapsed, activeProjectId, isMobileSidebarOpen, setIsMobileSidebarOpen } = useDashboard();
 
   // Authentication protection
   useEffect(() => {
@@ -52,15 +52,30 @@ export function MainLayoutContent({ children }: LayoutProps) {
 
   return (
     <div className={styles.dashboardLayout}>
+      {/* Mobile sidebar overlay */}
+      {isMobileSidebarOpen && (
+        <div 
+          className={styles.mobileOverlay}
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+
       <div
         className={styles.dashboardGrid}
         data-l1-collapsed={isGlobalSidebarCollapsed}
         data-l2-visible={!!activeProjectId}
+        data-mobile-open={isMobileSidebarOpen}
       >
-        <GlobalSidebar />
+        <div onClick={() => setIsMobileSidebarOpen(false)}>
+          <GlobalSidebar />
+        </div>
 
         {/* The ProjectSidebar is only rendered when a project is active */}
-        {activeProjectId && <ProjectSidebar projectId={activeProjectId} />}
+        {activeProjectId && (
+          <div onClick={() => setIsMobileSidebarOpen(false)}>
+            <ProjectSidebar projectId={activeProjectId} />
+          </div>
+        )}
 
         <main className={styles.mainContent}>
           {children}

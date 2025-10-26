@@ -8,6 +8,21 @@
   flex-direction: column;
   height: 100%; // Take full height from grid
   overflow: hidden; // Prevent sidebar scrolling
+  transition: transform 0.3s ease;
+  flex-shrink: 0; // Don't shrink on desktop
+
+  // Desktop: normal width
+  width: 250px;
+
+  // Mobile: hide sidebar, use horizontal tabs instead
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  // Desktop: show sidebar normally
+  @media (min-width: 769px) {
+    display: flex;
+  }
 
   .projectHeader {
     background: rgba($bg-secondary, 0.8);

@@ -415,6 +415,12 @@
   margin-top: 1.5rem;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
 }
 
 .paginationInfo {
@@ -426,6 +432,8 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .pageButton {

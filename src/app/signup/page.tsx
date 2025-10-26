@@ -67,25 +67,22 @@ export default function Signup() {
         password: formData.password
       });
 
-      if (result.success) {
-        // Registration successful, now sign in the user
-        const signInResult = await signIn('credentials', {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        });
-
-        if (signInResult?.error) {
-          setError('Account created but sign-in failed. Please try signing in manually.');
-        } else if (signInResult?.ok) {
-          router.push('/dashboard');
-        }
+      // If we get here without an exception, registration was successful
+      // The result might have success: true or just the user data
+      if (result && (result.success !== false)) {
+        // Show success message and redirect to login
+        setError(''); // Clear any previous errors
+        alert('Account created successfully! You can now sign in.');
+        router.push('/login');
       } else {
         setError(result.message || 'Failed to create account');
       }
     } catch (error) {
       console.error('Signup error:', error);
-      if (error instanceof Error) {
+      // Check if the error message indicates the user was actually created
+      if (error instanceof Error && error.message.includes('already exists')) {
+        setError('An account with this email already exists. Please sign in.');
+      } else if (error instanceof Error) {
         setError(error.message);
       } else {
         setError('An error occurred during signup');
