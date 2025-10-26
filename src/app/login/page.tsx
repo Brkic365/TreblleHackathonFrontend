@@ -156,7 +156,7 @@ export default function Login() {
 
           <div className={styles.authFooter}>
             <p>
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <button 
                 type="button" 
                 className={styles.linkButton}

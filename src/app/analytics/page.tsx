@@ -189,11 +189,13 @@ const createTransformFunction = (projectNamesMap: Record<string, string>) => (ba
   };
 };
 
+const getInitialDateRange = () => ({
+  from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
+  to: new Date()
+});
+
 export default function AnalyticsPage() {
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
-    from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
-    to: new Date()
-  });
+  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>(getInitialDateRange);
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
   const [availableProjects, setAvailableProjects] = useState<AvailableProject[]>([]);
   const [projectNamesMap, setProjectNamesMap] = useState<Record<string, string>>({});
