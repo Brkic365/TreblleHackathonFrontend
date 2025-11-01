@@ -148,7 +148,16 @@ const apiClient = {
     }
     
     // Construct the full URL
-    const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${path}`;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    
+    if (!baseUrl) {
+      console.error('NEXT_PUBLIC_API_URL is not defined!', {
+        allEnvVars: Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_'))
+      });
+    }
+    
+    const fullUrl = `${baseUrl}${path}`;
+    console.log('API Request:', { method, fullUrl, hasToken: !!token });
 
     try {
       const response = await fetch(fullUrl, requestOptions);
