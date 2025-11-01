@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           // Call Next.js API route which securely handles backend authentication
-          const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/login`, {
+          const response = await fetch(`${process.env.NEXTAUTH_URL}/api/internal-auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === 'google' || account?.provider === 'github') {
         try {
           const baseUrl = process.env.NEXTAUTH_URL || '';
-          const requestUrl = `${baseUrl}/api/auth/session`;
+          const requestUrl = `${baseUrl}/api/internal-auth/session`;
           
           console.log('🔐 OAuth Sign In:', {
             provider: account.provider,
@@ -142,7 +142,7 @@ export const authOptions: NextAuthOptions = {
             // User doesn't exist, create them
             console.log('User not found, creating new user for OAuth:', user.email);
             
-            const createUserUrl = `${baseUrl}/api/auth/oauth-user`;
+            const createUserUrl = `${baseUrl}/api/internal-auth/oauth-user`;
             const createResponse = await fetch(createUserUrl, {
               method: 'POST',
               headers: {

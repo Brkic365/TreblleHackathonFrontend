@@ -155,9 +155,10 @@ const apiClient = {
     
     // Construct the full URL
     // Auth endpoints go through Next.js API routes (server-side), everything else goes to backend
-    const isAuthEndpoint = path.startsWith('/api/auth/register') || 
-                          path.startsWith('/api/auth/session') || 
-                          path.startsWith('/api/auth/oauth-user');
+    const isAuthEndpoint = path.startsWith('/api/internal-auth/register') || 
+                          path.startsWith('/api/internal-auth/session') || 
+                          path.startsWith('/api/internal-auth/oauth-user') ||
+                          path.startsWith('/api/internal-auth/login');
     
     const baseUrl = isAuthEndpoint ? '' : (process.env.NEXT_PUBLIC_API_URL || '');
     
@@ -207,9 +208,9 @@ const apiClient = {
     }
   },
 
-  // Authentication endpoints
+  // Authentication endpoints (using internal-auth to avoid conflict with NextAuth)
   async createSession(email: string) {
-    return this.request('POST', '/api/auth/session', { email });
+    return this.request('POST', '/api/internal-auth/session', { email });
   },
 
   async createOAuthUser(userData: {
@@ -218,7 +219,7 @@ const apiClient = {
     provider: string;
     providerId: string;
   }) {
-    return this.request('POST', '/api/auth/oauth-user', userData);
+    return this.request('POST', '/api/internal-auth/oauth-user', userData);
   },
 
   // Project endpoints
@@ -409,7 +410,7 @@ const apiClient = {
     password: string; 
   }): Promise<{ success: boolean; message: string; user?: any }> {
     try {
-      const response = await this.request('POST', '/api/auth/register', data);
+      const response = await this.request('POST', '/api/internal-auth/register', data);
       
       // If backend returns user data directly (with id, email, etc.), consider it a success
       if (response && (response.success === true || response.id || response.user)) {
