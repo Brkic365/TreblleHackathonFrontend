@@ -32,12 +32,11 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          // Call backend login endpoint to validate credentials
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+          // Call Next.js API route which securely handles backend authentication
+          const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-internal-api-key': process.env.NEXT_PUBLIC_INTERNAL_API_KEY || '',
             },
             body: JSON.stringify({ 
               email: credentials.email,
@@ -47,6 +46,13 @@ export const authOptions: NextAuthOptions = {
 
           if (response.ok) {
             const data = await response.json();
+            
+            console.log('🔑 Credentials Auth Response:', {
+              hasToken: !!data.token,
+              hasUser: !!data.user,
+              userId: data.user?.id,
+              tokenPreview: data.token ? `${data.token.substring(0, 20)}...` : 'none'
+            });
             
             if (data.token && data.user) {
               return {
@@ -92,20 +98,33 @@ export const authOptions: NextAuthOptions = {
       // For OAuth providers, we need to check if user exists or create them
       if (account?.provider === 'google' || account?.provider === 'github') {
         try {
-          const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/session`;
+          const baseUrl = process.env.NEXTAUTH_URL || '';
+          const requestUrl = `${baseUrl}/api/auth/session`;
+          
+          console.log('🔐 OAuth Sign In:', {
+            provider: account.provider,
+            email: user.email,
+            name: user.name
+          });
           
           // First, try to get existing user
           let response = await fetch(requestUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-internal-api-key': process.env.NEXT_PUBLIC_INTERNAL_API_KEY || '',
             },
             body: JSON.stringify({ email: user.email }),
           });
 
           if (response.ok) {
             const data = await response.json();
+            
+            console.log('🔑 OAuth Session Response:', {
+              hasToken: !!data.token,
+              hasUser: !!data.user,
+              userId: data.user?.id,
+              tokenPreview: data.token ? `${data.token.substring(0, 20)}...` : 'none'
+            });
             
             // Store the backend token in the user object
             if (data.token) {
@@ -123,12 +142,11 @@ export const authOptions: NextAuthOptions = {
             // User doesn't exist, create them
             console.log('User not found, creating new user for OAuth:', user.email);
             
-            const createUserUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/oauth-user`;
+            const createUserUrl = `${baseUrl}/api/auth/oauth-user`;
             const createResponse = await fetch(createUserUrl, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'x-internal-api-key': process.env.NEXT_PUBLIC_INTERNAL_API_KEY || '',
               },
               body: JSON.stringify({ 
                 email: user.email,
@@ -140,6 +158,14 @@ export const authOptions: NextAuthOptions = {
 
             if (createResponse.ok) {
               const createData = await createResponse.json();
+              
+              console.log('🔑 OAuth User Creation Response:', {
+                hasToken: !!createData.token,
+                hasUser: !!createData.user,
+                userId: createData.user?.id,
+                tokenPreview: createData.token ? `${createData.token.substring(0, 20)}...` : 'none'
+              });
+              
               user.accessToken = createData.token;
               user.id = createData.user.id;
 
@@ -174,6 +200,15 @@ export const authOptions: NextAuthOptions = {
         session.accessToken = token.accessToken;
       }
       
+      console.log('📦 Session Callback:', {
+        hasSession: !!session,
+        hasUser: !!session?.user,
+        hasToken: !!token,
+        hasAccessToken: !!token?.accessToken,
+        accessTokenPreview: token?.accessToken ? `${token.accessToken.substring(0, 20)}...` : 'none',
+        userId: session?.user?.id
+      });
+      
       return session;
     },
     jwt: async ({ user, token }) => {
@@ -181,6 +216,18 @@ export const authOptions: NextAuthOptions = {
         token.uid = user.id;
         // Store the backend JWT token (works for both credentials and OAuth)
         token.accessToken = user.accessToken;
+        
+        console.log('🎫 JWT Callback (user provided):', {
+          userId: user.id,
+          hasAccessToken: !!user.accessToken,
+          accessTokenPreview: user.accessToken ? `${user.accessToken.substring(0, 20)}...` : 'none'
+        });
+      } else {
+        console.log('🎫 JWT Callback (no user):', {
+          hasToken: !!token,
+          hasAccessToken: !!token?.accessToken,
+          accessTokenPreview: token?.accessToken ? `${token.accessToken.substring(0, 20)}...` : 'none'
+        });
       }
       
       return token;

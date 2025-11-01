@@ -123,18 +123,24 @@ const apiClient = {
     const session = await getSession();
     const token = session?.accessToken; // The JWT from our Express backend
 
+    // Debug: Log session information
+    console.log('🔐 Session Debug:', {
+      hasSession: !!session,
+      sessionKeys: session ? Object.keys(session) : [],
+      hasAccessToken: !!token,
+      tokenPreview: token ? `${token.substring(0, 20)}...${token.substring(token.length - 10)}` : 'none',
+      fullSession: session, // Full session object for debugging
+    });
+
     const headers = new Headers({
       'Content-Type': 'application/json',
     });
 
-    // Add internal API key for auth endpoints
-    if (path.startsWith('/auth/')) {
-      headers.append('x-internal-api-key', process.env.NEXT_PUBLIC_INTERNAL_API_KEY || '');
-    }
-
     // If a token exists, add the Authorization header
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
+    } else {
+      console.warn('⚠️ No access token available for request:', { method, path });
     }
 
     const requestOptions: RequestInit = {
@@ -148,16 +154,21 @@ const apiClient = {
     }
     
     // Construct the full URL
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    // Auth endpoints go through Next.js API routes (server-side), everything else goes to backend
+    const isAuthEndpoint = path.startsWith('/api/auth/register') || 
+                          path.startsWith('/api/auth/session') || 
+                          path.startsWith('/api/auth/oauth-user');
     
-    if (!baseUrl) {
+    const baseUrl = isAuthEndpoint ? '' : (process.env.NEXT_PUBLIC_API_URL || '');
+    
+    if (!baseUrl && !isAuthEndpoint) {
       console.error('NEXT_PUBLIC_API_URL is not defined!', {
         allEnvVars: Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_'))
       });
     }
     
     const fullUrl = `${baseUrl}${path}`;
-    console.log('API Request:', { method, fullUrl, hasToken: !!token });
+    console.log('API Request:', { method, fullUrl, hasToken: !!token, isAuthEndpoint });
 
     try {
       const response = await fetch(fullUrl, requestOptions);
@@ -166,7 +177,19 @@ const apiClient = {
         // If the server responds with an error, try to parse it as JSON
         const errorData = await response.json().catch(() => ({}));
 
-        console.log(errorData);
+        console.error('❌ API Request Failed:', {
+          method,
+          path,
+          status: response.status,
+          statusText: response.statusText,
+          errorData,
+          hadToken: !!token,
+        });
+
+        // Special handling for auth errors
+        if (response.status === 401 || response.status === 403) {
+          console.error('🚫 Authentication/Authorization Error - Token may be invalid or expired');
+        }
 
         throw new Error(errorData.error || `Request failed with status ${response.status}`);
       }
